@@ -1,0 +1,39 @@
+{{ block "exercise_detail" . }}
+    <div class="p-4 w-[90%] mx-auto rounded-lg shadow-md">
+        <!-- Seção para informações gerais -->
+        <div class="mb-4">
+            <h2 class="text-white text-lg font-semibold">Exercise Details</h2>
+            <h3 class="text-red-400 text-base font-medium mt-2">{{ .Exercise.Name }}</h3>
+            <p class="text-neutral-400 text-sm mt-1 leading-relaxed">{{ .Exercise.Description }}</p>
+
+            <!-- Link adicionado abaixo da descrição -->
+            {{ if .Exercise.Link }}
+                <a href="{{ .Exercise.Link }}" class="text-red-400 text-sm mt-2 hover:underline block">
+                    Wikipedia link
+                </a>
+            {{ end }}
+
+            <!-- Exemplo de imagem, caso tenha -->
+            {{ if .ImageURL }}
+                <img src="{{ .ImageURL }}" alt="{{ .Exercise.Name }}" class="mt-3 rounded-md  w-[300px] h-[200px] ">
+            {{ end }}
+        </div>
+
+        <!-- Seção de Movimentos e Músculos -->
+        <div class="mt-4">
+            <h2 class="text-white text-sm font-semibold">Muscles & Movements</h2>
+            <div class="mt-2 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                {{ range .Mmjs }}
+                <div class="p-4 bg-neutral-900 rounded-md">
+                    <h3 class="text-red-400 text-xs font-semibold">{{ .JointName }}</h3>
+                    <div class="text-xs flex flex-col mt-1 space-y-1">
+                        <span class="text-neutral-200"><strong>Movement:</strong> {{ .MovimentName }}</span>
+                        <span class="text-neutral-400"><strong>Muscle Portion:</strong> {{ .MusclePortionName }}</span>
+                        <span class="text-neutral-500"><strong>Muscle Group:</strong> {{ .MuscleGroupName }}</span>
+                    </div>
+                </div>
+                {{ end }}
+            </div>
+        </div>
+    </div>
+{{ end }}

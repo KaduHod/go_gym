@@ -1,0 +1,48 @@
+{{ block "base" . }}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title></title>
+        <link href="public/css/main.css" rel="stylesheet">
+        <link href="public/css/utils.css" rel="stylesheet">
+        <script src="https://unpkg.com/htmx.org@2.0.4" integrity="sha384-HGfztofotfshcF7+8n44JQL2oJmowVChPTg48S+jvZoztPfvwD79OC/LTtG6dMp+" crossorigin="anonymous"></script>
+        <script src="https://unpkg.com/lucide@latest"></script>
+    </head>
+    <input type="hidden" name="csrf" value="{{ .csrf }}">
+    <meta
+    name="htmx-config"
+    content='{
+    "responseHandling":[
+    {"code":"204", "swap": false},
+    {"code":"[45]..", "swap": true, "error":true},
+    {"code":"200", "swap": true}
+    ]
+    }'
+    />
+    <body class="flex min-h-screen flex-col">
+        {{ template "header" }}
+        <div class="flex w-full">
+            {{ template "navbar" }}
+            <div class="flex flex-col min-h-screen justify-center w-full">
+                <main id="main" class="flex-1 w-full p-2">
+                    {{template "home" . }}
+                </main>
+                <div id="loading" class="hidden">Loading...</div>
+            </div>
+        </div>
+        {{ template "footer" }}
+    </body>
+    <script src="public/scripts/search_muscle_joints_movements.js"></script>
+    <!--<script src="public/scripts/header.js"></script>-->
+    <script>
+        lucide.createIcons();
+        document.body.addEventListener('htmx:beforeOnLoad', function (event) {
+            if (event.detail.xhr.status === 303) {
+                window.location.href = event.detail.xhr.getResponseHeader("Location");
+            }
+        });
+    </script>
+</html>
+{{end}}

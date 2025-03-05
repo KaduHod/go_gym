@@ -1,0 +1,80 @@
+{{ block "signup" . }}
+<div id="signup-wrapper" class="w-full h-full flex justify-center bg-neutral-900 p-6">
+    <div class="w-full max-w-md bg-neutral-800 p-6 rounded-lg shadow-lg border border-neutral-700">
+        <h2 class="text-white text-2xl font-bold mb-6 flex items-center gap-2">
+            <i data-lucide="user-plus" class="text-red-400 w-6 h-6"></i>
+            Create an Account
+        </h2>
+
+        <form
+            hx-post="/signup"
+            hx-target="#main"
+            hx-swap="innerHTML"
+            hx-trigger="submit"
+            hx-headers='js:{ "X-CSRF-Token": document.querySelector("[name=csrf]").value }'
+            class="flex flex-col gap-4"
+        >
+            <!-- Nome -->
+            <div>
+                <label for="name" class="text-white font-medium mb-2 flex items-center gap-2">
+                    <i data-lucide="user" class="text-red-400 w-4 h-4"></i>
+                    Full Name
+                </label>
+                <input id="name" name="name" type="text" placeholder="Enter your name" required value="{{ .UserDTO.Name }}"
+                    class="p-2 rounded-lg w-full bg-neutral-700 text-white border border-neutral-600 focus:border-red-500 focus:outline-none">
+            </div>
+
+            <!-- Email -->
+            <div>
+                <label for="email" class="text-white font-medium mb-2 flex items-center gap-2">
+                    <i data-lucide="mail" class="text-red-400 w-4 h-4"></i>
+                    Email
+                </label>
+                <input id="email" name="email" hx-indicator="#error-email" type="email" placeholder="Enter your email" value="{{ .UserDTO.Email }}" required
+                    class="p-2 rounded-lg w-full bg-neutral-700 text-white border border-neutral-600 focus:border-red-500 focus:outline-none">
+            </div>
+
+            <!-- Senha -->
+            <div>
+                <label for="password" class="text-white font-medium mb-2 flex items-center gap-2">
+                    <i data-lucide="lock" class="text-red-400 w-4 h-4"></i>
+                    Password
+                </label>
+                <input id="password" name="password" type="password" placeholder="Enter your password" value="{{ .UserDTO.Password }}"  required
+                    class="p-2 rounded-lg w-full bg-neutral-700 text-white border border-neutral-600 focus:border-red-500 focus:outline-none">
+            </div>
+
+            <!-- Confirmação de Senha -->
+            <div>
+                <label for="confirm-password" class="text-white font-medium mb-2 flex items-center gap-2">
+                    <i data-lucide="lock" class="text-red-400 w-4 h-4"></i>
+                    Confirm Password
+                </label>
+                <input id="confirm-password" name="confirmPassword" type="password" placeholder="Confirm your password" value="{{ .UserDTO.ConfirmPassword }}" required
+                    class="p-2 rounded-lg w-full bg-neutral-700 text-white border border-neutral-600 focus:border-red-500 focus:outline-none">
+            </div>
+
+            <!-- Botão -->
+            <button type="submit"
+                class="w-full bg-red-600 hover:bg-red-700 transition p-3 rounded-lg text-white font-semibold flex items-center justify-center gap-2">
+                <i data-lucide="check-circle" class="w-5 h-5"></i>
+                Sign Up
+            </button>
+            {{ if .Errors }}
+            <div class="bg-red-700 text-white p-4 rounded-lg mt-4">
+                <ul class="list-disc pl-5">
+                    {{ range .Errors }}
+                    <li>{{ . }}</li>
+                    {{ end }}
+                </ul>
+            </div>
+            {{ end }}
+        </form>
+    </div>
+
+    <script>
+        lucide.createIcons();
+    </script>
+</div>
+{{ end }}
+

@@ -1,0 +1,80 @@
+
+{{ block "search" . }}
+<div class="w-full h-full flex box-border">
+    <!-- Sidebar (Inputs) -->
+    <div class="w-1/4 rounded-lg min-w-[250px] bg-neutral-900 p-4 flex flex-col gap-4">
+        <div class="filter-item">
+            <label for="search-group" class="block text-white font-medium mb-2 flex items-center gap-2">
+                <i data-lucide="layers" class="text-red-400 w-4 h-4"></i>
+                Muscle Group
+            </label>
+            <input id="search-group" type="text" placeholder="Search by muscle group" class="p-2 rounded-lg w-full bg-neutral-800 text-white  focus:border-red-500 focus:outline-none">
+        </div>
+
+        <div class="filter-item">
+            <label for="search-portion" class="block text-white font-medium mb-2 flex items-center gap-2">
+                <i data-lucide="grid" class="text-red-400 w-4 h-4"></i>
+                Muscle Portion
+            </label>
+            <input id="search-portion" type="text" placeholder="Search by muscle portion" class="p-2 rounded-lg w-full bg-neutral-800 text-white  focus:border-red-500 focus:outline-none">
+        </div>
+
+        <div class="filter-item">
+            <label for="search-joint" class="block text-white font-medium mb-2 flex items-center gap-2">
+                <i data-lucide="link" class="text-red-400 w-4 h-4"></i>
+                Joint
+            </label>
+            <input id="search-joint" type="text" placeholder="Search by joint" class="p-2 rounded-lg w-full bg-neutral-800 text-white  focus:border-red-500 focus:outline-none">
+        </div>
+
+        <div class="filter-item">
+            <label for="search-movement" class="block text-white font-medium mb-2 flex items-center gap-2">
+                <i data-lucide="activity" class="text-red-400 w-4 h-4"></i>
+                Movement
+            </label>
+            <input id="search-movement" type="text" placeholder="Search by movement" class="p-2 rounded-lg w-full bg-neutral-800 text-white  focus:border-red-500 focus:outline-none">
+        </div>
+    </div>
+
+    <!-- Results Section -->
+    <div class="w-3/4 overflow-y-auto rounded-lg h-full bg-neutral-800">
+        <div id="muscle-list" class="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-6 w-full max-w-6xl min-h-[600px] max-h-[600px]">
+            {{ range $mgName, $mgValue := .Groups }}
+            <div data-muscle-group="{{$mgName}}" class="bg-neutral-800 p-2 muscle-group relative overflow-hidden">
+                <h2 class="text-white text-2xl font-bold mb-4 muscle-group-title flex items-center gap-2">
+                    <i data-lucide="dumbbell" class="text-red-500 w-5 h-5"></i>
+                    {{$mgName}}
+                </h2>
+                {{ range $mpName, $mpValue := $mgValue.Portions }}
+                <div data-muscle-portion="{{$mpName}}" class="mb-6 muscle-portion">
+                    <h3 class="text-white text-lg font-semibold mb-3 flex items-center gap-2">
+                        <i data-lucide="chevron-right" class="text-red-400 w-4 h-4"></i>
+                        {{$mpName}}
+                    </h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        {{ range $item := $mpValue.Itens }}
+                        <div data-joint="{{$item.Joint_name}}" data-movement="{{$item.Movement_name}}"
+                            class="bg-neutral-900 p-4 rounded-lg muscle-card shadow-md flex flex-col gap-2 cursor-pointer transition-transform duration-300 hover:scale-105 hover:bg-red-800">
+                            <h2 class="text-white muscle-name text-md font-semibold">{{ $item.Muscle_name }}</h2>
+                            <p class="joint-name text-gray-400 text-sm">Joint: {{$item.Joint_name}}</p>
+                            <p class="movement-name text-gray-400 text-sm">Movement: {{$item.Movement_name}}</p>
+                        </div>
+                        {{ end }}
+                    </div>
+                </div>
+                {{ end }}
+            </div>
+            {{ end }}
+        </div>
+    </div>
+
+    <script>
+        searchGroup().addEventListener("input", filterMuscles);
+        searchJoint().addEventListener("input", filterMuscles);
+        searchPortion().addEventListener("input", filterMuscles);
+        searchMovement().addEventListener("input", filterMuscles);
+        lucide.createIcons();
+    </script>
+</div>
+{{ end }}
+

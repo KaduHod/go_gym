@@ -1,0 +1,30 @@
+body {
+    background: linear-gradient(
+    -45deg, /* Inclinação do centro para cima na direita */
+    rgba(0, 0, 0, 1) 0%,
+    rgba(0, 0, 0, 1) 50%, /* Mantém o preto até o centro */
+    rgba(32, 0, 0, 1) 55%, /* Início do vermelho logo após o centro */
+    rgba(16, 0, 0, 1) 70%, /* Espalhamento do vermelho */
+    rgba(0, 0, 0, 1) 100% /* Volta para o preto */
+    );
+    background-attachment: fixed;
+    background-size: 200% 200%;
+    background-position: top right; /* Mantém o traço concentrado na parte superior direita */
+}
+/* Adicionando animação fade-in e scale no seu CSS */
+@keyframes fadeInScaleUp {
+    0% {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.fade-in {
+    animation: fadeInScaleUp 0.5s ease-out forwards;
+}
+
+

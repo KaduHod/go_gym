@@ -1,0 +1,35 @@
+{{block "list_exercises2" .}}
+<div class="flex w-full h-full box-border">
+    <!-- Lista de Exercícios -->
+    <div class="flex-1 w-1/4 bg-neutral-900 p-4 rounded-lg
+                min-h-[600px] max-h-[800px] overflow-y-auto">
+        <h2 class="text-white text-lg font-semibold mb-3 flex items-center gap-2">
+            <i data-lucide="dumbbell" class="text-red-500 w-5 h-5"></i>
+            Exercises
+        </h2>
+        <ul class="space-y-2">
+        {{ range .Exercises }}
+            <li class="flex items-center gap-2 p-2 rounded-md cursor-pointer"
+                hx-post="/exercises/details/{{ .Id }}"
+                hx-target="#exercise-details"
+                hx-swap="innerHTML"
+                hx-trigger="click"
+                hx-headers='js:{ "X-CSRF-Token": document.querySelector("[name=csrf]").value }'>
+                <i data-lucide="activity" class="text-red-400 w-4 h-4"></i>
+                <span class="text-white text-sm font-medium border-b border-neutral-500 pb-[1px] hover:text-red-400 transition-colors duration-200">
+                    {{.Name}}
+                </span>
+            </li>
+        {{ end }}
+        </ul>
+    </div>
+    <!-- Área de Exibição -->
+    <div id="exercise-details" class="flex-2 w-3/4 bg-neutral-800 rounded-lg
+                min-h-[600px] max-h-[800px] overflow-y-auto">
+    </div>
+</div>
+<script>
+    lucide.createIcons();
+</script>
+{{end}}
+

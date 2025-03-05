@@ -1,0 +1,73 @@
+{{ block "list_exercises" . }}
+<div class="w-full flex justify-center p-2">
+    <div class="w-full bg-neutral-800 rounded-lg shadow-lg overflow-x-hidden flex space-x-4">
+        <!-- Parte da esquerda: Tabela com a lista de exercícios (1/3 da largura) -->
+        <div class="w-1/3 max-h-[800px] overflow-y-auto bg-neutral-700 p-4 rounded-lg shadow-lg">
+            <table class="w-full">
+                <thead class="bg-neutral-600">
+                    <tr>
+                        <th class="px-6 py-3 text-left text-sm font-semibold text-white">Ação</th>
+                        <th class="px-6 py-3 text-left text-sm font-semibold text-white">Nome do Exercício</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-neutral-600">
+                    {{ range .Exercises }}
+                    <tr class="hover:bg-neutral-750 transition-colors duration-200">
+                        <!-- Ícone de Ação (primeira coluna) -->
+                        <td class="px-6 py-4">
+                            <button
+                                hx-post="/exercises/details/{{ .Id }}"
+                                hx-target="exercise-details"
+                                hx-swap="innerHTML"
+                                hx-trigger="click"
+                                hx-headers='js:{ "X-CSRF-Token": document.querySelector("[name=csrf]").value }'
+                                class="p-2 rounded-lg hover:bg-neutral-700 transition-colors duration-200"
+                                onclick="toggleDetails({{ .Id }})"
+                            >
+                                <i data-lucide="eye" class="w-5 h-5 text-white"></i>
+                            </button>
+                        </td>
+                        <!-- Nome do Exercício -->
+                        <td class="px-6 py-4 text-white">{{ .Name }}</td>
+                    </tr>
+                    {{ end }}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Parte da direita: Seção de detalhes dos movimentos (2/3 da largura) -->
+        <div class="w-2/3 p-4 bg-neutral-700 rounded-lg shadow-lg">
+            <div id="exercise-details" class="text-neutral-300">
+                <h2 class="text-xl font-semibold mb-4">Selecione um exercício para ver os detalhes</h2>
+                <!-- Detalhes dos movimentos vão aqui -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Função para controlar o toggle entre mostrar/esconder
+    function toggleDetails(id) {
+        // Primeiro, esconder todas as divs de detalhes
+        const allDetails = document.querySelectorAll('[id^="details-"]');
+        allDetails.forEach(detail => {
+            detail.classList.add('hidden');
+        });
+
+        // Em seguida, mostrar a div com o id correspondente
+        const targetDetail = document.getElementById(`details-${id}`);
+        targetDetail.classList.remove('hidden');
+
+        // Atualizar a seção da direita com os detalhes do exercício
+        const exerciseDetails = document.getElementById('exercise-details');
+        exerciseDetails.innerHTML = `
+            <h2 class="text-xl font-semibold mb-4">Detalhes do Exercício</h2>
+            <!-- Adicione os detalhes específicos aqui -->
+            <p class="text-sm">Movimentos: Detalhes sobre os movimentos do exercício aqui.</p>
+        `;
+    }
+
+    lucide.createIcons();
+</script>
+{{ end }}
+

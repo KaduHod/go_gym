@@ -1,0 +1,33 @@
+{{ block "footer" . }}
+<footer class="bg-red-950 text-white w-full h-20 flex flex-col justify-center items-center">
+    <div id="contato" class="text-center">
+        <h2 class="text-lg font-semibold mb-1">Get In Touch</h2>
+        <div class="flex space-x-4 justify-around">
+            <!-- GitHub -->
+            <a href="https://github.com/KaduHod" target="_blank" class="hover:text-gray-200 transition">
+                <img
+                src="public/images/github.svg"
+                alt="GitHub"
+                class="w-6 h-6 inline"
+                />
+            </a>
+            <!-- LinkedIn -->
+            <a href="https://www.linkedin.com/in/carlosjrribas98/" target="_blank" class="hover:text-gray-200 transition">
+                <img
+                src="public/images/linkedin.svg"
+                alt="LinkedIn"
+                class="w-6 h-6 inline"
+                />
+            </a>
+            <!-- E-mail -->
+            <!--src="https://cdn.simpleicons.org/gmail/ffffff"-->
+            <a href="mailto:carlosjr.ribas@gmail.com" class="hover:text-gray-200 transition">
+                <img
+                alt="Gmail"
+                class="w-6 h-6 inline"
+                />
+            </a>
+        </div>
+    </div>
+</footer>
+{{end}}
