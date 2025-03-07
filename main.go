@@ -67,7 +67,7 @@ func main() {
         Format: fmt.Sprintf("[%s] path: ${uri} ${method} | status: ${status} | lat: ${latency}\n", currentTime()),
 	}))
     e.Use(middleware.CSRFWithConfig(middleware.CSRFConfig{
-        TokenLookup: "header:X-CSRF-Token",
+        TokenLookup: "header:X-CSRF-Token,form:csrf",
         CookieHTTPOnly: true,
     }))
 	e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
@@ -75,16 +75,7 @@ func main() {
 		AllowMethods: []string{http.MethodGet, http.MethodPut, http.MethodPost, http.MethodDelete},
 	}))
     e.Use(session.Middleware(sessions.NewCookieStore([]byte("shhiiiu"))))
-    e.GET("/", func(c echo.Context) error {
-        err := c.Render(http.StatusOK, "base", map[string]interface{}{
-            "csrf": c.Get("csrf"),
-        })
-        if err != nil {
-            fmt.Println(err)
-        }
-        return err
-    })
-    e.GET("/home", baseController.Index)
+    e.GET("/", baseController.Index)
     e.POST("/muscles-joints-movements", func(c echo.Context) error {
         rows, err := db.Query(`SELECT
                 mg.name AS muscle_group_name,
@@ -146,6 +137,6 @@ func main() {
     e.POST("/signin", userController.SingIn)
     e.GET("/signup", userController.SingUpIndex)
     e.POST("/signup", userController.SingUp)
-    e.GET("/signout", baseController.LogOut)
+    e.POST("/signout", baseController.LogOut)
     e.Logger.Fatal(e.Start(":3004"))
 }

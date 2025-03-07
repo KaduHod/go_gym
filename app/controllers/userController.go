@@ -54,8 +54,14 @@ func (c *UserController) SingIn(e echo.Context) error {
         fmt.Println(err)
         return err
     }
-    //viewData := HomeData{Messages: []string{"You are now logged in!"}}
-    e.Redirect(303,"/")
+    viewData := make(map[string]interface{})
+    viewData["Messages"] = []string{"You are now logged in!"}
+    viewData["UserEmail"] = user.Email
+    viewData["csrf"] = e.Get("csrf")
+    if err := e.Render(200, "body", viewData); err != nil {
+        fmt.Println(err.Error())
+        return err
+    }
     return nil
 }
 type UserDTO struct {

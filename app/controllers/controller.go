@@ -27,10 +27,13 @@ func (c *Controller) Index(e echo.Context) error {
     }
     userEmail := session.Values["user_email"]
     if userEmail == nil {
-        return e.Render(200, "home", nil)
+        return e.Render(200, "base", map[string]interface{}{
+            "csrf": e.Get("csrf"),
+        })
     }
-    return e.Render(200, "home", map[string]interface{}{
+    return e.Render(200, "base", map[string]interface{}{
         "UserEmail": userEmail,
+        "csrf": e.Get("csrf"),
     })
 }
 func (c *Controller) createSession(ctx echo.Context, user UserSignInDTO) (*sessions.Session, error) {

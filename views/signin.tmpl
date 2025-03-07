@@ -16,11 +16,10 @@
         {{ end }}
         <form
             hx-post="/signin"
-            hx-target="#main"
-            hx-swap="innerHTML"
+            hx-target="#signin-wrapper"
+            hx-swap="outerHTML"
             hx-trigger="submit"
             hx-headers='js:{ "X-CSRF-Token": document.querySelector("[name=csrf]").value }'
-            hx-on::after-request="if(event.detail.successful === false) this.innerHTML = event.detail.xhr.responseText"
             class="flex flex-col gap-4"
         >
             <!-- Email -->

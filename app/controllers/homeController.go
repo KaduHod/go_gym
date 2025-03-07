@@ -13,6 +13,7 @@ func NewHomeController() *HomeController {
 }
 type HomeData struct {
     Messages []string
+    Data map[string]interface {}
 }
 func (c *HomeController) HomeIndex(e echo.Context) error {
     if err := e.Render(200, "home", nil); err != nil {
