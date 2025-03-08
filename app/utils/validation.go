@@ -29,7 +29,9 @@ func Validate[T any](i T) ([]string, error) {
                 }
             }
         }
-        return errorsMessages, err
+        if len(errorsMessages) == 0 {
+            return nil, err
+        }
     }
     return errorsMessages, nil
 }

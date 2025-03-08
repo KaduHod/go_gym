@@ -16,11 +16,11 @@ func NewSignInService(db *sql.DB) *SignInService {
 }
 func (this *SignInService) SignIn(email string, password string) ([]string, error) {
     errorMessages, err := this.validate(email, password)
-    if err != nil {
-        return nil, err
-    }
     if len(errorMessages) > 0 {
         return errorMessages, errors.New("Validation errors")
+    }
+    if err != nil {
+        return nil, err
     }
     var user User
     err = this.db.QueryRow("SELECT id, name, email, password FROM user WHERE email = ?", strings.ToLower(email)).Scan(&user.Id, &user.Name, &user.Email, &user.Password)

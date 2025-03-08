@@ -76,6 +76,7 @@ func main() {
 	}))
     e.Use(session.Middleware(sessions.NewCookieStore([]byte("shhiiiu"))))
     e.GET("/", baseController.Index)
+    e.GET("/home", baseController.Home)
     e.POST("/muscles-joints-movements", func(c echo.Context) error {
         rows, err := db.Query(`SELECT
                 mg.name AS muscle_group_name,

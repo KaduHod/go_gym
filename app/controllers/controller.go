@@ -36,6 +36,9 @@ func (c *Controller) Index(e echo.Context) error {
         "csrf": e.Get("csrf"),
     })
 }
+func (self *Controller) Home(c echo.Context) error {
+    return c.Render(200, "home", nil)
+}
 func (c *Controller) createSession(ctx echo.Context, user UserSignInDTO) (*sessions.Session, error) {
     session, err := session.Get("session", ctx)
     if err != nil {
