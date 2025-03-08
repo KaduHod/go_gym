@@ -8,12 +8,6 @@ import (
 type ListExercisesService struct {
     db *sql.DB
 }
-type Exercise struct {
-    Name string `json:"name"`
-    Id int `json:"id"`
-    Description string
-    Link string
-}
 type MMJ struct {
     RelationId int `json:"relation_id"`
     JointName string `json:"join_name"`
