@@ -1,8 +1,7 @@
-
 {{ block "search" . }}
-<div class="w-full h-full flex box-border">
+<div class="w-full h-full flex box-border bg-neutral-900">
     <!-- Sidebar (Inputs) -->
-    <div class="w-1/4 rounded-lg min-w-[250px] bg-neutral-900 p-4 flex flex-col gap-4">
+    <div class="w-1/4 rounded-lg min-w-[250px] p-4 flex flex-col gap-4 opacity-0 -translate-x-10 transition-all duration-300 ease-out animate-fade-in-left">
         <div class="filter-item">
             <label for="search-group" class="block text-white font-medium mb-2 flex items-center gap-2">
                 <i data-lucide="layers" class="text-red-400 w-4 h-4"></i>
@@ -37,10 +36,10 @@
     </div>
 
     <!-- Results Section -->
-    <div class="w-3/4 overflow-y-auto rounded-lg h-full bg-neutral-800">
+    <div class="w-3/4 overflow-y-auto rounded-lg h-full opacity-0 translate-x-10 transition-all duration-300 ease-out animate-fade-in-right">
         <div id="muscle-list" class="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-6 w-full max-w-6xl min-h-[600px] max-h-[600px]">
             {{ range $mgName, $mgValue := .Groups }}
-            <div data-muscle-group="{{$mgName}}" class="bg-neutral-800 p-2 muscle-group relative overflow-hidden">
+            <div data-muscle-group="{{$mgName}}" class="p-2 muscle-group relative overflow-hidden">
                 <h2 class="text-white text-2xl font-bold mb-4 muscle-group-title flex items-center gap-2">
                     <i data-lucide="dumbbell" class="text-red-500 w-5 h-5"></i>
                     {{$mgName}}
@@ -54,7 +53,7 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                         {{ range $item := $mpValue.Itens }}
                         <div data-joint="{{$item.Joint_name}}" data-movement="{{$item.Movement_name}}"
-                            class="bg-neutral-900 p-4 rounded-lg muscle-card shadow-md flex flex-col gap-2 cursor-pointer transition-transform duration-300 hover:scale-105 hover:bg-red-800">
+                            class="bg-neutral-800 p-4 rounded-lg muscle-card shadow-md flex flex-col gap-2 cursor-pointer transition-transform duration-300 hover:scale-105 hover:bg-red-800">
                             <h2 class="text-white muscle-name text-md font-semibold">{{ $item.Muscle_name }}</h2>
                             <p class="joint-name text-gray-400 text-sm">Joint: {{$item.Joint_name}}</p>
                             <p class="movement-name text-gray-400 text-sm">Movement: {{$item.Movement_name}}</p>

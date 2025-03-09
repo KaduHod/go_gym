@@ -6,13 +6,10 @@
             Sign In
         </h2>
         {{ if .Messages }}
-        <div class="bg-neutral-900 text-white p-3 rounded-lg mb-4">
-            <ul class="list-disc list-inside">
-                {{ range .Messages }}
-                <li>{{ . }}</li>
-                {{ end }}
-            </ul>
-        </div>
+            {{ template "messages" . }}
+        {{ end }}
+        {{ if .Errors }}
+            {{ template "errors" . }}
         {{ end }}
         <form
             hx-post="/signin"
@@ -48,16 +45,6 @@
                 <i data-lucide="check-circle" class="w-5 h-5"></i>
                 Sign In
             </button>
-            <!-- Exibição de Erros -->
-            {{ if .Errors }}
-            <div class="bg-red-700 text-white p-3 rounded-lg mb-4">
-                <ul class="list-disc list-inside">
-                    {{ range .Errors }}
-                    <li>{{ . }}</li>
-                    {{ end }}
-                </ul>
-            </div>
-            {{ end }}
         </form>
     </div>
 

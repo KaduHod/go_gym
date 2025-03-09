@@ -1,0 +1,11 @@
+{{block "messages" . }}
+    {{ if .Messages }}
+    <div class="bg-neutral-700 text-white p-3 rounded-lg mb-4 transition-opacity duration-500 opacity-0 animate-fade-in">
+        <ul class="list-disc list-inside">
+            {{ range .Messages }}
+            <li>{{ . }}</li>
+            {{ end }}
+        </ul>
+    </div>
+    {{ end }}
+{{end}}
