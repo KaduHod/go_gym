@@ -91,24 +91,28 @@ func (controller *ExercisesController) CreateExercise(c echo.Context) error {
     messages, err := utils.Validate(exercise)
     if err != nil {
         return c.Render(400, "exercises_form", map[string]interface{}{
-            "Error": messages,
+            "Errors": messages,
+            "Exercises": exercises,
         })
     }
     messages, err = controller.CreateExerciseService.Create(name, description)
     if err != nil {
+        fmt.Println(err.Error())
         return c.Render(400, "exercises_form", map[string]interface{}{
-            "Error": messages,
+            "Errors": messages,
+            "Exercises": exercises,
         })
     }
     exercises, err = controller.ListExercisesService.ListExercises()
     if err != nil {
         fmt.Println(err.Error())
         return c.Render(400, "exercises_form", map[string]interface{}{
-            "Error": []string{"Error, contact the admin"},
+            "Errors": []string{"Error, contact the admin"},
+            "Exercises": exercises,
         })
     }
     return c.Render(200, "exercises_form", map[string]interface{}{
-        "Message": []string{"Exercise created successfully"},
+        "Messages": []string{"Exercise created successfully"},
         "Exercises": exercises,
     })
 }

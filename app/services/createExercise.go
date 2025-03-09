@@ -22,11 +22,11 @@ func NewCreateExerciseService(db *sql.DB) *CreateExerciseService {
 }
 func (self *CreateExerciseService) Create(name string, description string) ([]string, error) {
     exists, err := self.exerciseExists(name)
-    if err != nil {
-        return nil, err
-    }
     if exists {
         return []string{"Exercise already exists"}, errors.New("Exercise already exists")
+    }
+    if err != nil {
+        return nil, err
     }
     _, err = self.db.Exec("INSERT INTO exercise (name, description) VALUES (?, ?)", utils.CapitalizePhrase(name), description)
     if err != nil {
