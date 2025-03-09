@@ -37,6 +37,11 @@
             <button hx-get="/signup" hx-target="#main" type="button">Sing Up</button>
         </div>
         {{ else }}
+        <a href="#" hx-target="#main" hx-headers='js:{ "X-CSRF-Token": document.querySelector("[name=csrf]").value }' hx-post="/exercises/create" hx-indicator="#loading" class="group flex items-center gap-3 px-4 py-2 text-sm font-medium transition-colors duration-300 hover:text-red-400 relative cursor-pointer">
+            <span class="absolute left-0 top-0 bottom-0 my-auto h-full w-1 bg-red-500 rounded transform scale-y-0 transition-transform origin-left group-hover:scale-y-100"></span>
+            <i data-lucide="dumbbell" class="w-5 h-5"></i>
+            <span>Create Exercise</span>
+        </a>
         <form
             action="/signout"
             method="POST"

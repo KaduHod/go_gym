@@ -1,0 +1,97 @@
+{{ block "exercises_form" . }}
+<div id="create-exercise-wrapper" class="w-full h-full flex justify-center bg-neutral-900 p-6">
+    <div class="w-full max-w-5xl flex gap-6">
+        <div class="w-1/2 bg-neutral-800 p-6 rounded-lg shadow-lg border border-neutral-700">
+            <h2 class="text-white text-2xl font-bold mb-6 flex items-center gap-2">
+                <i data-lucide="dumbbell" class="text-red-400 w-6 h-6"></i>
+                Create Exercise
+            </h2>
+
+            {{ if .Messages }}
+            <div class="bg-neutral-900 text-white p-3 rounded-lg mb-4">
+                <ul class="list-disc list-inside">
+                    {{ range .Messages }}
+                    <li>{{ . }}</li>
+                    {{ end }}
+                </ul>
+            </div>
+            {{ end }}
+
+            <form
+                hx-post="/exercise"
+                hx-target="#main"
+                hx-swap="innerHTML"
+                hx-trigger="submit"
+                hx-headers='js:{ "X-CSRF-Token": document.querySelector("[name=csrf]").value }'
+                class="flex flex-col gap-4"
+            >
+                <div>
+                    <label for="name" class="text-white font-medium mb-2 flex items-center gap-2">
+                        <i data-lucide="edit" class="text-red-400 w-4 h-4"></i>
+                        Name
+                    </label>
+                    <input id="name" name="name" type="text" placeholder="Enter exercise name" required
+                        class="p-2 rounded-lg w-full bg-neutral-700 text-white border border-neutral-600 focus:border-red-500 focus:outline-none">
+                </div>
+
+                <!-- Description -->
+                <div>
+                    <label for="description" class="text-white font-medium mb-2 flex items-center gap-2">
+                        <i data-lucide="file-text" class="text-red-400 w-4 h-4"></i>
+                        Description
+                    </label>
+                    <textarea id="description" name="description" placeholder="Enter exercise description" required
+                        class="p-2 rounded-lg w-full bg-neutral-700 text-white border border-neutral-600 focus:border-red-500 focus:outline-none resize-y min-h-[150px]">
+                    </textarea>
+                </div>
+
+                <!-- Button -->
+                <button type="submit"
+                    class="w-full bg-red-600 hover:bg-red-700 transition p-3 rounded-lg text-white font-semibold flex items-center justify-center gap-2">
+                    <i data-lucide="plus-circle" class="w-5 h-5"></i>
+                    Create Exercise
+                </button>
+
+                <!-- Errors -->
+                {{ if .Errors }}
+                <div class="bg-red-700 text-white p-3 rounded-lg mb-4">
+                    <ul class="list-disc list-inside">
+                        {{ range .Errors }}
+                        <li>{{ . }}</li>
+                        {{ end }}
+                    </ul>
+                </div>
+                {{ end }}
+            </form>
+        </div>
+
+        <!-- Lista de Exercícios -->
+        <div class="flex-1 w-1/2 bg-neutral-900 p-4 rounded-lg min-h-[600px] max-h-[800px] overflow-y-auto">
+            <h2 class="text-white text-lg font-semibold mb-3 flex items-center gap-2">
+                <i data-lucide="dumbbell" class="text-red-500 w-5 h-5"></i>
+                Exercises
+            </h2>
+            <ul class="space-y-2 overflow-y-auto">
+            {{ range .Exercises }}
+                <li class="flex items-center gap-2 p-2 rounded-md cursor-pointer"
+                    hx-post="/exercises/details/{{ .Id }}"
+                    hx-target="#exercise-details"
+                    hx-swap="innerHTML"
+                    hx-trigger="click"
+                    hx-headers='js:{ "X-CSRF-Token": document.querySelector("[name=csrf]").value }'>
+                    <i data-lucide="activity" class="text-red-400 w-4 h-4"></i>
+                    <span class="text-white text-sm font-medium border-b border-neutral-500 pb-[1px] hover:text-red-400 transition-colors duration-200">
+                        {{ .Name }}
+                    </span>
+                </li>
+            {{ end }}
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        lucide.createIcons();
+    </script>
+</div>
+{{ end }}
+

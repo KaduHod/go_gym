@@ -739,6 +739,10 @@ video {
   min-height: 100vh;
 }
 
+.min-h-\[150px\] {
+  min-height: 150px;
+}
+
 .w-1 {
   width: 0.25rem;
 }
@@ -796,6 +800,14 @@ video {
   width: 100%;
 }
 
+.w-1\/2 {
+  width: 50%;
+}
+
+.w-2\/4 {
+  width: 50%;
+}
+
 .min-w-\[250px\] {
   min-width: 250px;
 }
@@ -806,6 +818,10 @@ video {
 
 .max-w-md {
   max-width: 28rem;
+}
+
+.max-w-5xl {
+  max-width: 64rem;
 }
 
 .flex-1 {
@@ -827,6 +843,10 @@ video {
 
 .cursor-pointer {
   cursor: pointer;
+}
+
+.resize-y {
+  resize: vertical;
 }
 
 .list-inside {

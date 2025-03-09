@@ -54,9 +54,10 @@ func main() {
     e := echo.New()
     e.Renderer = newTemplate()
     listExercisesService := services.NewListExercisesService(db)
-    exerciseController := controllers.NewExerciseController(*listExercisesService)
+    createExerciseService := services.NewCreateExerciseService(db)
     signUpService := services.NewSignUpService(db)
     signInService := services.NewSignInService(db)
+    exerciseController := controllers.NewExerciseController(*listExercisesService, *createExerciseService)
     userController := controllers.NewUserController(signUpService, signInService)
     baseController := controllers.NewController()
     currentTime := func() string {
@@ -139,5 +140,7 @@ func main() {
     e.GET("/signup", userController.SingUpIndex)
     e.POST("/signup", userController.SingUp)
     e.POST("/signout", baseController.LogOut)
+    e.POST("/exercises/create", exerciseController.CreateExerciseForm)
+    e.POST("/exercise", exerciseController.CreateExercise)
     e.Logger.Fatal(e.Start(":3004"))
 }

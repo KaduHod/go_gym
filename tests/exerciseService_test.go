@@ -18,33 +18,36 @@ func TestMain(m *testing.M) {
 
     // Executa os testes
     exitCode := m.Run()
-
     // Finaliza testes (caso precise limpar algo)
+    after()
     os.Exit(exitCode)
 }
+func after() {
+    db := database.ConnetionMysql()
+    db.Exec("DELETE FROM user WHERE email = ?", "test@mail2.com")
+    db.Exec("DELETE FROM exercise WHERE name = 'Teste'")
+    db.Exec("DELETE FROM exercise WHERE name = 'Teste2'")
+}
 func TestGetExerciseById(t *testing.T) {
-    result, err := service.GetById(87)
+    _, err := service.GetById(87)
     if err != nil {
         t.Errorf("Error listing exercises: %v", err)
         return
     }
-    t.Logf("Exercises: %v", result)
 }
 func TestListExercises(t *testing.T) {
-    result, err := service.ListExercises()
+    _, err := service.ListExercises()
     if err != nil {
         t.Errorf("Error listing exercises: %v", err)
         return
     }
-    t.Logf("Exercises: %v", result)
 }
 
 func TestMMJFromExercise(t *testing.T) {
-    result, err := service.ListExerciseJmm(services.Exercise{Id: 87})
+    _, err := service.ListExerciseJmm(services.Exercise{Id: 87})
     if err != nil {
         t.Errorf("Error listing exercises: %v", err)
         return
     }
-    t.Logf("Exercises: %v", result)
 }
 

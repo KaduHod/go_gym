@@ -3,6 +3,7 @@ package controllers
 import (
 	"fmt"
 	"kaduhod/gym/app/services"
+	"kaduhod/gym/app/utils"
 	"strconv"
 
 	"github.com/labstack/echo/v4"
@@ -11,11 +12,12 @@ import (
 type ExercisesController struct {
     Controller
     ListExercisesService services.ListExercisesService
+    CreateExerciseService services.CreateExerciseService
 }
-
-func NewExerciseController(listExercisesService services.ListExercisesService) *ExercisesController {
+func NewExerciseController(listExercisesService services.ListExercisesService, createExerciseService services.CreateExerciseService) *ExercisesController {
     return &ExercisesController{
         ListExercisesService: listExercisesService,
+        CreateExerciseService: createExerciseService,
     }
 }
 type ExerciseViewData struct {
@@ -66,4 +68,47 @@ func (controller *ExercisesController) ExerciseDetail(c echo.Context) error {
         return err
     }
     return nil
+}
+func (controller *ExercisesController) CreateExerciseForm(c echo.Context) error {
+    exercises, err := controller.ListExercisesService.ListExercises()
+    if err != nil {
+        fmt.Println(err.Error())
+        return c.Render(400, "exercises_form", map[string]interface{}{
+            "Error": []string{"Error, contact the admin"},
+        })
+    }
+    if err := c.Render(200, "exercises_form", map[string]interface{}{"Exercises": exercises}); err != nil {
+        fmt.Println(err.Error())
+        return err
+    }
+    return nil
+}
+func (controller *ExercisesController) CreateExercise(c echo.Context) error {
+    exercises, err := controller.ListExercisesService.ListExercises()
+    name := c.FormValue("name")
+    description := c.FormValue("description")
+    exercise := services.Exercise{Name: name, Description: description}
+    messages, err := utils.Validate(exercise)
+    if err != nil {
+        return c.Render(400, "exercises_form", map[string]interface{}{
+            "Error": messages,
+        })
+    }
+    messages, err = controller.CreateExerciseService.Create(name, description)
+    if err != nil {
+        return c.Render(400, "exercises_form", map[string]interface{}{
+            "Error": messages,
+        })
+    }
+    exercises, err = controller.ListExercisesService.ListExercises()
+    if err != nil {
+        fmt.Println(err.Error())
+        return c.Render(400, "exercises_form", map[string]interface{}{
+            "Error": []string{"Error, contact the admin"},
+        })
+    }
+    return c.Render(200, "exercises_form", map[string]interface{}{
+        "Message": []string{"Exercise created successfully"},
+        "Exercises": exercises,
+    })
 }
