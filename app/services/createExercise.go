@@ -10,7 +10,7 @@ type Exercise struct {
     Name string `json:"name" validate:"required"`
     Description string `json:"description" validate:"required"`
     Id int
-    Link string
+    Link string `json:"link" validate:"required"`
 }
 type CreateExerciseService struct {
     db *sql.DB
@@ -20,7 +20,14 @@ func NewCreateExerciseService(db *sql.DB) *CreateExerciseService {
         db: db,
     }
 }
-func (self *CreateExerciseService) Create(name string, description string) ([]string, error) {
+func (self *CreateExerciseService) Update(exercise Exercise) ([]string, error) {
+    _, err := self.db.Exec("UPDATE exercise SET name = ?, description = ?, info_link = ? WHERE id = ?", utils.CapitalizePhrase(exercise.Name), exercise.Description, exercise.Link, exercise.Id)
+    if err != nil {
+        return nil, err
+    }
+    return nil, nil
+}
+func (self *CreateExerciseService) Create(name string, description string, link string) ([]string, error) {
     exists, err := self.exerciseExists(name)
     if exists {
         return []string{"Exercise already exists"}, errors.New("Exercise already exists")
@@ -28,7 +35,7 @@ func (self *CreateExerciseService) Create(name string, description string) ([]st
     if err != nil {
         return nil, err
     }
-    _, err = self.db.Exec("INSERT INTO exercise (name, description) VALUES (?, ?)", utils.CapitalizePhrase(name), description)
+    _, err = self.db.Exec("INSERT INTO exercise (name, description, info_link) VALUES (?, ?, ?)", utils.CapitalizePhrase(name), description, link)
     if err != nil {
         return nil, err
     }

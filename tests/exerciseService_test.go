@@ -1,7 +1,7 @@
-
 package tests
 
 import (
+	"database/sql"
 	"kaduhod/gym/app/services"
 	"kaduhod/gym/database"
 	"os"
@@ -9,11 +9,12 @@ import (
 )
 
 var service *services.ListExercisesService
+var db *sql.DB
 
 // TestMain configura o ambiente antes de rodar os testes
 func TestMain(m *testing.M) {
     // Configuração antes dos testes
-    db := database.ConnetionMysql()
+    db = database.ConnetionMysql()
     service = services.NewListExercisesService(db)
 
     // Executa os testes
@@ -27,6 +28,7 @@ func after() {
     db.Exec("DELETE FROM user WHERE email = ?", "test@mail2.com")
     db.Exec("DELETE FROM exercise WHERE name = 'Teste'")
     db.Exec("DELETE FROM exercise WHERE name = 'Teste2'")
+    db.Exec("DELETE FROM exercise_amm WHERE exercise_id = 178")
 }
 func TestGetExerciseById(t *testing.T) {
     _, err := service.GetById(87)

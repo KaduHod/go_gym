@@ -25,7 +25,7 @@ Return a JSON array where each entry represents a joint movement involved in the
     "muscle_id": <integer>,
     "muscle_name": "<string>"
   }
-]
+]```
 ### Example Output:
 For a Pull-Up exercise, the expected output format would be similar to:
 

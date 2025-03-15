@@ -57,7 +57,8 @@ func main() {
     createExerciseService := services.NewCreateExerciseService(db)
     signUpService := services.NewSignUpService(db)
     signInService := services.NewSignInService(db)
-    exerciseController := controllers.NewExerciseController(*listExercisesService, *createExerciseService)
+    buildExerciseService := services.NewBuildExerciseService(db)
+    exerciseController := controllers.NewExerciseController(*listExercisesService, *createExerciseService, *buildExerciseService)
     userController := controllers.NewUserController(signUpService, signInService)
     baseController := controllers.NewController()
     currentTime := func() string {
@@ -142,5 +143,8 @@ func main() {
     e.POST("/signout", baseController.LogOut)
     e.POST("/exercises/create", exerciseController.CreateExerciseForm)
     e.POST("/exercise", exerciseController.CreateExercise)
+    e.POST("/exercise/:id", exerciseController.EditExerciseForm)
+    e.PATCH("/exercise/:id/save", exerciseController.EditExercise)
+    e.POST("/exercise/build/:id", exerciseController.Build)
     e.Logger.Fatal(e.Start(":3004"))
 }

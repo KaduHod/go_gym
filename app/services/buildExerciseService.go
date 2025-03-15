@@ -10,7 +10,14 @@ import (
 	"os"
 	"strings"
 )
-
+type RelationAMM  struct {
+    MovimentId   int    `json:"moviment_id"`
+    MovimentName string `json:"moviment_name"`
+    JointId      int    `json:"joint_id"`
+    JointName    string `json:"joint_name"`
+    MuscleId     int    `json:"muscle_id"`
+    MuscleName   string `json:"muscle_name"`
+}
 type BuildExerciseService struct {
     db *sql.DB
 }
@@ -47,8 +54,65 @@ func (b *BuildExerciseService) Build(name string) error {
     }
     // Criar contexto da IA para processar exercicio e criar relacionamento com o banco
     prompt, err := b.prompt(exercise.Name, exercise.Description, string(jointsJson), string(musclesJson), string(movementsJson))
-    fmt.Println(prompt)
-    b.requestToAi(prompt)
+    if err != nil {
+        return err
+    }
+    //fmt.Println(prompt)
+    stringJson, err := b.requestToAi(prompt)
+    if err != nil {
+        return err
+    }
+    var relation []RelationAMM
+    if err := json.Unmarshal([]byte(stringJson), &relation); err != nil {
+        fmt.Println(err)
+        return err
+    }
+    fmt.Println(relation)
+    b.registerRelationToExercise(exercise, relation)
+    return nil
+}
+func (b *BuildExerciseService) ammAlreadyRegistered(relation RelationAMM) (int64, error) {
+    var id int64
+    query := "SELECT id FROM articulation_movement_muscle WHERE movement_id = ? AND articulation_id = ? AND muscle_portion_id = ?"
+
+    err := b.db.QueryRow(query, relation.MovimentId, relation.JointId, relation.MuscleId).Scan(&id)
+    if err != nil {
+        if err == sql.ErrNoRows {
+            return 0, nil
+        }
+        return 0, fmt.Errorf("failed to query id: %w", err)
+    }
+
+    return id, nil
+}
+func (b *BuildExerciseService) registerRelation(relation RelationAMM) (int64, error) {
+    var insertedId int64
+    result, err := b.db.Exec("INSERT INTO articulation_movement_muscle (movement_id, articulation_id, muscle_portion_id) VALUES (?, ?, ?)", relation.MovimentId, relation.JointId, relation.MuscleId)
+    insertedId, err = result.LastInsertId()
+    return insertedId, err
+}
+func (b *BuildExerciseService) registerRelationToExercise(exercise Exercise, relations []RelationAMM) (error) {
+    for _, relation := range relations {
+        var id int64
+        id, err := b.ammAlreadyRegistered(relation)
+        if err != nil {
+            fmt.Println("Pulando")
+            fmt.Println(err)
+            continue
+        }
+        if id == 0 {
+            id, err = b.registerRelation(relation)
+            if err != nil {
+                fmt.Println("Pulando")
+                fmt.Println(err)
+                continue
+            }
+        }
+        _, err = b.db.Exec("INSERT INTO exercise_amm (exercise_id, amm_id) VALUES (?, ?)", exercise.Id, id)
+        if err != nil {
+            fmt.Println(err)
+        }
+    }
     return nil
 }
 func (b *BuildExerciseService) getExercise(name string) (Exercise, error) {
@@ -172,6 +236,13 @@ func (b *BuildExerciseService) getPromptSkeleton() (string, error) {
     }
     return string(content), err
 }
+type PromptResponse struct {
+   Choices []struct {
+       Message struct {
+            Content string `json:"content"`
+       } `json:"message"`
+   } `json:"choices"`
+}
 func (b *BuildExerciseService) requestToAi(content string) (string, error) {
     body := map[string]interface{}{
         "model": "deepseek-chat",
@@ -207,7 +278,11 @@ func (b *BuildExerciseService) requestToAi(content string) (string, error) {
         fmt.Println(err)
         return "", err
     }
-    fmt.Println(string(responseBody))
-    fmt.Println(response.StatusCode)
-    return "", nil
+    responseStruct := PromptResponse{}
+    if err := json.Unmarshal(responseBody, &responseStruct); err != nil {
+        panic(err)
+    }
+    responseStruct.Choices[0].Message.Content = strings.ReplaceAll(responseStruct.Choices[0].Message.Content, "```json", "")
+    responseStruct.Choices[0].Message.Content = strings.ReplaceAll(responseStruct.Choices[0].Message.Content, "```", "")
+    return responseStruct.Choices[0].Message.Content, nil
 }

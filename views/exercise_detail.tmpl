@@ -15,6 +15,14 @@
         {{ if .ImageURL }}
         <img src="{{ .ImageURL }}" alt="{{ .Exercise.Name }}" class="mt-3 rounded-md w-[300px] h-[200px]">
         {{ end }}
+        <!-- Botão HTMX abaixo da imagem -->
+        <button
+            hx-target="#main"
+            hx-headers='js:{ "X-CSRF-Token": document.querySelector("[name=csrf]").value }'
+            hx-post="/exercise/{{ .Exercise.Id }}"
+            class="mt-3 bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 transition-all">
+            View Exercise
+        </button>
     </div>
 
     <!-- Seção da direita (movimentos e músculos) -->

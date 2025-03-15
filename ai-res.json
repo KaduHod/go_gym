@@ -1,0 +1,28 @@
+{
+  "id": "86182d43-ebb0-402a-9c5f-d05202862d46",
+  "object": "chat.completion",
+  "created": 1741974420,
+  "model": "deepseek-chat",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "```json\n[\n  {\n    \"moviment_id\": 7,\n    \"moviment_name\": \"Flexion\",\n    \"joint_id\": 2,\n    \"joint_name\": \"Shoulder Glenohumeral\",\n    \"muscle_id\": 1,\n    \"muscle_name\": \"Upper Major\"\n  },\n  {\n    \"moviment_id\": 8,\n    \"moviment_name\": \"Extension\",\n    \"joint_id\": 2,\n    \"joint_name\": \"Shoulder Glenohumeral\",\n    \"muscle_id\": 1,\n    \"muscle_name\": \"Upper Major\"\n  },\n  {\n    \"moviment_id\": 7,\n    \"moviment_name\": \"Flexion\",\n    \"joint_id\": 3,\n    \"joint_name\": \"Elbow\",\n    \"muscle_id\": 16,\n    \"muscle_name\": \"Long head\"\n  },\n  {\n    \"moviment_id\": 8,\n    \"moviment_name\": \"Extension\",\n    \"joint_id\": 3,\n    \"joint_name\": \"Elbow\",\n    \"muscle_id\": 19,\n    \"muscle_name\": \"Long head\"\n  },\n  {\n    \"moviment_id\": 7,\n    \"moviment_name\": \"Flexion\",\n    \"joint_id\": 3,\n    \"joint_name\": \"Elbow\",\n    \"muscle_id\": 17,\n    \"muscle_name\": \"Short head\"\n  },\n  {\n    \"moviment_id\": 8,\n    \"moviment_name\": \"Extension\",\n    \"joint_id\": 3,\n    \"joint_name\": \"Elbow\",\n    \"muscle_id\": 20,\n    \"muscle_name\": \"Medial head\"\n  },\n  {\n    \"moviment_id\": 8,\n    \"moviment_name\": \"Extension\",\n    \"joint_id\": 3,\n    \"joint_name\": \"Elbow\",\n    \"muscle_id\": 21,\n    \"muscle_name\": \"Lateral head\"\n  },\n  {\n    \"moviment_id\": 7,\n    \"moviment_name\": \"Flexion\",\n    \"joint_id\": 2,\n    \"joint_name\": \"Shoulder Glenohumeral\",\n    \"muscle_id\": 4,\n    \"muscle_name\": \"Minor\"\n  },\n  {\n    \"moviment_id\": 8,\n    \"moviment_name\": \"Extension\",\n    \"joint_id\": 2,\n    \"joint_name\": \"Shoulder Glenohumeral\",\n    \"muscle_id\": 4,\n    \"muscle_name\": \"Minor\"\n  },\n  {\n    \"moviment_id\": 7,\n    \"moviment_name\": \"Flexion\",\n    \"joint_id\": 2,\n    \"joint_name\": \"Shoulder Glenohumeral\",\n    \"muscle_id\": 5,\n    \"muscle_name\": \"Anterior Serratus\"\n  },\n  {\n    \"moviment_id\": 8,\n    \"moviment_name\": \"Extension\",\n    \"joint_id\": 2,\n    \"joint_name\": \"Shoulder Glenohumeral\",\n    \"muscle_id\": 5,\n    \"muscle_name\": \"Anterior Serratus\"\n  }\n]\n```"
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 2221,
+    "completion_tokens": 679,
+    "total_tokens": 2900,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "prompt_cache_hit_tokens": 0,
+    "prompt_cache_miss_tokens": 2221
+  },
+  "system_fingerprint": "fp_3a5770e1b4_prod0225"
+}

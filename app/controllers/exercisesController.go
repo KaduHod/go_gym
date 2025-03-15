@@ -13,11 +13,13 @@ type ExercisesController struct {
     Controller
     ListExercisesService services.ListExercisesService
     CreateExerciseService services.CreateExerciseService
+    BuildExerciseService services.BuildExerciseService
 }
-func NewExerciseController(listExercisesService services.ListExercisesService, createExerciseService services.CreateExerciseService) *ExercisesController {
+func NewExerciseController(listExercisesService services.ListExercisesService, createExerciseService services.CreateExerciseService, buildExerciseService services.BuildExerciseService) *ExercisesController {
     return &ExercisesController{
         ListExercisesService: listExercisesService,
         CreateExerciseService: createExerciseService,
+        BuildExerciseService: buildExerciseService,
     }
 }
 type ExerciseViewData struct {
@@ -69,6 +71,102 @@ func (controller *ExercisesController) ExerciseDetail(c echo.Context) error {
     }
     return nil
 }
+func (controller *ExercisesController) EditExerciseForm(c echo.Context) error {
+    exerciseId := c.Param("id")
+    if exerciseId == "" {
+        return c.String(400, "id is required")
+    }
+    exerciseIdInt, err := strconv.Atoi(exerciseId)
+    if err != nil {
+        return c.String(400, err.Error())
+    }
+    exercise, err := controller.ListExercisesService.GetById(exerciseIdInt)
+    if err != nil {
+        return c.String(400, err.Error())
+    }
+    mmjs, err := controller.ListExercisesService.ListExerciseJmm(exercise)
+    if err != nil {
+        return c.String(400, err.Error())
+    }
+    viewData := MMJViewData{
+        Mmjs: mmjs,
+        ImageURL: "public/images/exercises/"+strconv.Itoa(exercise.Id)+".jpeg",
+        Exercise: exercise,
+    }
+    if err := c.Render(200, "edit_exercise", viewData); err != nil {
+        fmt.Println(err.Error())
+        return err
+    }
+    return nil
+}
+func (controller *ExercisesController) EditExercise(c echo.Context) error {
+    name := c.FormValue("name")
+    description := c.FormValue("description")
+    link := c.FormValue("link")
+    id := c.FormValue("id")
+    idInt, err := strconv.Atoi(id)
+    fmt.Println(idInt, "AQUIII")
+    exercise, err := controller.ListExercisesService.GetById(idInt)
+    if err != nil {
+        return c.String(400, err.Error())
+    }
+    mmjs, err := controller.ListExercisesService.ListExerciseJmm(exercise)
+    if err != nil {
+        return c.String(400, err.Error())
+    }
+    exercise.Name = name
+    exercise.Description = description
+    exercise.Link = link
+    exercise.Id = idInt
+    messages, err := controller.CreateExerciseService.Update(exercise)
+    if err != nil {
+        fmt.Println(err.Error())
+        return c.Render(400, "edit_exercise", map[string]interface{}{
+            "Errors": messages,
+        })
+    }
+    viewData := MMJViewData{
+        Mmjs: mmjs,
+        ImageURL: "public/images/exercises/"+strconv.Itoa(exercise.Id)+".jpeg",
+        Exercise: exercise,
+    }
+    if err := c.Render(200, "edit_exercise", viewData); err != nil {
+        fmt.Println(err.Error())
+        return err
+    }
+    return nil
+}
+func (controller *ExercisesController) Build(c echo.Context) error {
+    exerciseId := c.Param("id")
+    if exerciseId == "" {
+        return c.String(400, "id is required")
+    }
+    exerciseIdInt, err := strconv.Atoi(exerciseId)
+    if err != nil {
+        return c.String(400, err.Error())
+    }
+    exercise, err := controller.ListExercisesService.GetById(exerciseIdInt)
+    if err != nil {
+        return c.String(400, err.Error())
+    }
+    if err := controller.BuildExerciseService.Build(exercise.Name); err != nil {
+        return c.String(400, err.Error())
+    }
+    mmjs, err := controller.ListExercisesService.ListExerciseJmm(exercise)
+    if err != nil {
+        return c.String(400, err.Error())
+    }
+    viewData := MMJViewData{
+        Mmjs: mmjs,
+        ImageURL: "public/images/exercises/"+strconv.Itoa(exercise.Id)+".jpeg",
+        Exercise: exercise,
+    }
+    if err := c.Render(200, "edit_exercise", viewData); err != nil {
+        fmt.Println(err.Error())
+        return err
+    }
+    return nil
+}
 func (controller *ExercisesController) CreateExerciseForm(c echo.Context) error {
     exercises, err := controller.ListExercisesService.ListExercises()
     if err != nil {
@@ -87,6 +185,7 @@ func (controller *ExercisesController) CreateExercise(c echo.Context) error {
     exercises, err := controller.ListExercisesService.ListExercises()
     name := c.FormValue("name")
     description := c.FormValue("description")
+    link := c.FormValue("link")
     exercise := services.Exercise{Name: name, Description: description}
     messages, err := utils.Validate(exercise)
     if err != nil {
@@ -95,7 +194,7 @@ func (controller *ExercisesController) CreateExercise(c echo.Context) error {
             "Exercises": exercises,
         })
     }
-    messages, err = controller.CreateExerciseService.Create(name, description)
+    messages, err = controller.CreateExerciseService.Create(name, description, link)
     if err != nil {
         fmt.Println(err.Error())
         return c.Render(400, "exercises_form", map[string]interface{}{
