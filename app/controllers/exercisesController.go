@@ -30,9 +30,38 @@ func (controller *ExercisesController) ListExercises(c echo.Context) error {
     if err != nil {
         return c.String(400, err.Error())
     }
-    viewData := ExerciseViewData{Exercises: exercises}
-    fmt.Println(viewData)
-    if err := c.Render(200, "list_exercises2", viewData); err != nil {
+    var bechPess services.Exercise
+    for _, exercise := range exercises {
+        if exercise.Name == "Bench Press" {
+            bechPess = exercise
+        }
+    }
+    if bechPess.Id == 0 {
+        if err := c.Render(200, "list_exercises2", map[string]interface{}{"Exercises": exercises}); err != nil {
+            fmt.Println(err.Error())
+            return err
+        }
+    }
+    bechPess, err = controller.ListExercisesService.GetById(bechPess.Id)
+    if err != nil {
+        if err := c.Render(200, "list_exercises2", map[string]interface{}{"Exercises": exercises}); err != nil {
+            fmt.Println(err.Error())
+            return err
+        }
+    }
+    mmjs, err := controller.ListExercisesService.ListExerciseJmm(bechPess)
+    if err != nil {
+        if err := c.Render(200, "list_exercises2", map[string]interface{}{"Exercises": exercises}); err != nil {
+            fmt.Println(err.Error())
+            return err
+        }
+    }
+    if err := c.Render(200, "list_exercises2", map[string]interface{}{
+        "Exercises": exercises,
+        "Mmjs": mmjs,
+        "ImageURL": "public/images/exercises/"+strconv.Itoa(bechPess.Id)+".jpeg",
+        "Exercise": bechPess,
+    }); err != nil {
         fmt.Println(err.Error())
         return err
     }

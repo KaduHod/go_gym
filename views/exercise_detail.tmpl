@@ -1,9 +1,8 @@
 {{ block "exercise_detail" . }}
-<div class="p-4 w-[90%] mx-auto rounded-lg flex gap-8">
+<div class="p-4 w-full mx-auto rounded-lg flex gap-8">
     <!-- Seção da esquerda (informações gerais) -->
     <div class="w-1/2 opacity-0 -translate-x-10 transition-all duration-300 ease-out animate-fade-in-left">
-        <h2 class="text-white text-lg font-semibold">Exercise Details</h2>
-        <h3 class="text-red-400 text-base font-medium mt-2">{{ .Exercise.Name }}</h3>
+        <h2 class="text-white text-lg font-semibold">{{ .Exercise.Name }}</h2>
         <p class="text-neutral-400 text-sm mt-1 leading-relaxed">{{ .Exercise.Description }}</p>
 
         {{ if .Exercise.Link }}
@@ -20,15 +19,16 @@
             hx-target="#main"
             hx-headers='js:{ "X-CSRF-Token": document.querySelector("[name=csrf]").value }'
             hx-post="/exercise/{{ .Exercise.Id }}"
-            class="mt-3 bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 transition-all">
+            class="mt-3 app-input px-4 py-2 rounded-md hover:bg-red-600 transition-all">
             View Exercise
         </button>
     </div>
 
     <!-- Seção da direita (movimentos e músculos) -->
     <div class="w-1/2 opacity-0 translate-x-10 transition-all duration-300 ease-out animate-fade-in-right">
+
         <h2 class="text-white text-sm font-semibold">Muscles & Movements</h2>
-        <div class="mt-2 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div class="mt-2 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4">
             {{ range .Mmjs }}
             <div class="p-4 bg-neutral-800 rounded-md">
                 <h3 class="text-red-400 text-xs font-semibold">{{ .JointName }}</h3>

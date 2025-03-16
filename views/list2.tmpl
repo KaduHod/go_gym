@@ -1,8 +1,8 @@
 {{block "list_exercises2" .}}
 <div class="flex w-full h-full bg-neutral-900 box-border">
     <!-- Lista de Exercícios -->
-    <div class="flex-1 w-1/4 p-4 rounded-lg
-                min-h-[600px] max-h-[800px] overflow-y-auto opacity-0 -translate-x-10 transition-all duration-300 ease-out animate-fade-in-left">
+    <div class="flex-1 w-1/4 p-4 rounded-lg shadow-lg
+                min-h-[600px] max-h-[800px] overflow-y-auto opacity-0 -translate-x-10 transition-all duration-300 ease-out animate-fade-in-left bg-app-gradient h-fit">
         <h2 class="text-white text-lg font-semibold mb-3 flex items-center gap-2">
             <i data-lucide="dumbbell" class="text-red-500 w-5 h-5"></i>
             Exercises
@@ -24,8 +24,11 @@
         </ul>
     </div>
     <!-- Área de Exibição -->
-    <div id="exercise-details" class="flex-2 w-3/4 rounded-lg
+    <div id="exercise-details" class="flex-3 w-3/4 rounded-lg
                 min-h-[600px] max-h-[800px] overflow-y-auto opacity-0 translate-x-10 transition-all duration-300 ease-out animate-fade-in-right">
+        {{if .Exercise.Id }}
+            {{template "exercise_detail" .}}
+        {{end}}
     </div>
 </div>
 <script>

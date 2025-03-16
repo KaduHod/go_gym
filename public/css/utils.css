@@ -1,15 +1,4 @@
 body {
-    background: linear-gradient(
-    -45deg, /* Inclinação do centro para cima na direita */
-    rgba(0, 0, 0, 1) 0%,
-    rgba(0, 0, 0, 1) 50%, /* Mantém o preto até o centro */
-    rgba(32, 0, 0, 1) 55%, /* Início do vermelho logo após o centro */
-    rgba(16, 0, 0, 1) 70%, /* Espalhamento do vermelho */
-    rgba(0, 0, 0, 1) 100% /* Volta para o preto */
-    );
-    background-attachment: fixed;
-    background-size: 200% 200%;
-    background-position: top right; /* Mantém o traço concentrado na parte superior direita */
 }
 /* Adicionando animação fade-in e scale no seu CSS */
 @keyframes fadeInScaleUp {
@@ -42,12 +31,12 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-    background: #1e1e1e;
+    background: #f4f7f7;
     border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb {
-    background: #ff4d4d;
+    background: #0b0d0e;
     border-radius: 10px;
     transition: background 0.3s ease-in-out;
 }
@@ -59,5 +48,5 @@ body {
 /* Firefox */
 * {
     scrollbar-width: thin;
-    scrollbar-color: #ff4d4d #1e1e1e;
+    scrollbar-color: #f4f7f7 #0b0d0e;
 }

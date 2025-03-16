@@ -20,26 +20,15 @@
     ]
     }'
     />
-    <body class="flex min-h-screen flex-col">
+    <body class="bg-[url('/public/images/bg-circles.svg')] bg-no-repeat bg-right bg-cover flex min-h-screen text-app-950 flex-col">
         <input type="hidden" name="csrf" value="{{ .csrf }}">
-        {{ template "header" . }}
-        <div class="flex w-full">
-            {{ template "navbar" . }}
-            <div class="flex flex-col min-h-screen justify-center w-full">
-                <main id="main" class="flex-1 w-full p-2">
-                    {{template "home" . }}
-                </main>
-                <div id="loading" class="hidden">Loading...</div>
-            </div>
-        </div>
-        {{ template "footer" . }}
+        {{ template "body" . }}
     </body>
     <script src="public/scripts/search_muscle_joints_movements.js"></script>
     <!--<script src="public/scripts/header.js"></script>-->
     <script>
         lucide.createIcons();
         document.body.addEventListener('htmx:beforeSwap', function (event) {
-            console.log(event)
             if(event.detail.requestConfig.path == "/signin" && event.detail.requestConfig.verb == "post" && event.detail.xhr.status == 200) {
                 event.detail.target = event.detail.xhr.status == 200 ? document.body : document.getElementById("signin-wrapper");
             }

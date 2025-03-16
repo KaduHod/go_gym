@@ -1,38 +1,37 @@
-
 {{ block "home" . }}
     {{ if .Messages }}
         {{ template "messages" . }}
     {{ end }}
 
-    <!-- Seção Principal -->
-    <section class="text-center py-12 mt-4 md:py-20">
-        <h1 class="text-3xl md:text-5xl font-bold text-white">Bem-vindo ao Kadu Gym</h1>
-        <p class="mt-4 text-lg text-gray-300">Uma plataforma completa para entender e aprimorar seus treinos!</p>
+    <!-- Main Section -->
+    <section class="text-center py-6 mt-2 md:py-20">
+        <h1 class="text-3xl md:text-5xl font-bold text-white">Welcome to Kadu Gym</h1>
+        <p class="mt-4 text-lg text-gray-300">A complete platform to understand and improve your workouts!</p>
     </section>
 
-    <!-- Recursos Principais -->
-    <section class="grid md:grid-cols-2 gap-8 py-12">
-        <!-- Movimentos e Músculos -->
-        <div class="bg-black border border-gray-700 rounded-lg p-6 shadow-lg text-white text-center flex flex-col items-center transition-all duration-500 opacity-0 translate-y-5 animate-fade-in">
+    <!-- Main Features -->
+    <section class="grid md:grid-cols-2 gap-8 py-6">
+        <!-- Movements and Muscles -->
+        <div class="bg-gradient-to-tl from-app-200 to-app-100 rounded-lg p-6 shadow-lg text-white text-center flex flex-col items-center transition-all duration-500 opacity-0 translate-y-5 animate-fade-in">
             <span class="text-4xl">💪</span>
-            <h2 class="text-xl font-semibold mt-4">Visualização de Movimentos</h2>
-            <p class="mt-2 text-gray-400">Explore músculos, articulações e biomecânica dos exercícios mais comuns da academia.</p>
-            <button hx-target="#main" hx-headers='js:{ "X-CSRF-Token": document.querySelector("[name=csrf]").value }' hx-post="/muscles-joints-movements" class="mt-4 px-4 py-2 bg-gray-800 text-white rounded-lg hover:bg-gray-700 transition">Saiba mais</button>
+            <h2 class="text-xl font-semibold mt-4">Movement Visualization</h2>
+            <p class="mt-2 text-gray-400">Explore muscles, joints, and biomechanics of the most common gym exercises.</p>
+            <button hx-target="#main" hx-headers='js:{ "X-CSRF-Token": document.querySelector("[name=csrf]").value }' hx-post="/muscles-joints-movements" class="mt-4 px-4 py-2 bg-gray-800 text-white rounded-lg app-input hover:bg-gray-700 transition">Learn more</button>
         </div>
 
-        <!-- Listagem de Exercícios -->
-        <div class="bg-black border border-gray-700 rounded-lg p-6 shadow-lg text-white text-center flex flex-col items-center transition-all duration-500 opacity-0 translate-y-5 animate-fade-in">
+        <!-- Exercise List -->
+        <div class="bg-gradient-to-tl from-app-200 to-app-100 rounded-lg p-6 shadow-lg text-center flex flex-col items-center transition-all duration-500 opacity-0 translate-y-5 animate-fade-in">
             <span class="text-4xl">🏋️‍♂️</span>
-            <h2 class="text-xl font-semibold mt-4">Lista de Exercícios</h2>
-            <p class="mt-2 text-gray-400">Descubra exercícios e suas variações para diferentes grupos musculares.</p>
-            <button hx-target="#main" hx-headers='js:{ "X-CSRF-Token": document.querySelector("[name=csrf]").value }' hx-post="/exercises" class="mt-4 px-4 py-2 bg-gray-800 text-white rounded-lg hover:bg-gray-700 transition">Ver lista</button>
+            <h2 class="text-xl font-semibold mt-4">Exercise List</h2>
+            <p class="mt-2 text-gray-400">Discover exercises and their variations for different muscle groups.</p>
+            <button hx-target="#main" hx-headers='js:{ "X-CSRF-Token": document.querySelector("[name=csrf]").value }' hx-post="/exercises" class="mt-4 px-4 py-2 bg-gray-800 text-white rounded-lg hover:bg-gray-700 app-input transition">View list</button>
         </div>
     </section>
 
-    <!-- Mais Recursos em Breve -->
+    <!-- More Features Coming Soon -->
     <section class="text-center py-12">
-        <h2 class="text-2xl font-semibold text-white">Mais funcionalidades em breve!</h2>
-        <p class="mt-2 text-gray-400">Estamos sempre adicionando novas ferramentas para otimizar seus treinos.</p>
+        <h2 class="text-2xl font-semibold text-white">More features coming soon!</h2>
+        <p class="mt-2 text-gray-400">We are constantly adding new tools to optimize your workouts.</p>
     </section>
 {{ end }}
 

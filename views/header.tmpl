@@ -1,20 +1,14 @@
 {{ block "header" . }}
-<header class="w-full bg-red-950 shadow-md">
-    <div class="container mx-auto flex justify-between items-center px-6 py-4">
+<header class="w-full border-b bg-gradient-to-tl from-app-white to-app-50 bg-app-50 border-app-200 mb-6">
+    <div class="container mx-auto flex justify-around items-center px-6 py-4">
         <!-- Logo e Nome -->
         <div class="flex items-center space-x-3">
             <img src="public/images/logo-simples.svg" alt="Logo" class="w-10 h-10">
-            <span class="text-lg text-white font-semibold tracking-wide">Kadu Gym</span>
+            <span class="text-lg font-semibold tracking-wide">Kadu Gym</span>
         </div>
 
-        <!-- Navegação -->
-        <nav class="hidden md:flex space-x-6">
-            <!--<a href="#formulario_calcular" class="text-white hover:text-gray-200 transition">Simular</a>-->
-            <a href="#contato" class="text-white hover:text-gray-200 transition">Contact information</a>
-        </nav>
-
         <!-- Botão Mobile -->
-        <button class="md:hidden text-white hover:text-gray-200 focus:outline-none">
+        <button class="md:hidden hover:text-app-200 focus:outline-none">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
             </svg>
