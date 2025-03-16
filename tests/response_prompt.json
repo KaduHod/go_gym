@@ -1,0 +1,152 @@
+
+[
+  {
+    "moviment_id": 7,
+    "moviment_name": "Flexion",
+    "joint_id": 2,
+    "joint_name": "Shoulder Glenohumeral",
+    "muscle_id": 1,
+    "muscle_name": "Upper Major",
+    "role": "concentric"
+  },
+  {
+    "moviment_id": 8,
+    "moviment_name": "Extension",
+    "joint_id": 2,
+    "joint_name": "Shoulder Glenohumeral",
+    "muscle_id": 1,
+    "muscle_name": "Upper Major",
+    "role": "eccentric"
+  },
+  {
+    "moviment_id": 7,
+    "moviment_name": "Flexion",
+    "joint_id": 3,
+    "joint_name": "Elbow",
+    "muscle_id": 19,
+    "muscle_name": "Long head",
+    "role": "concentric"
+  },
+  {
+    "moviment_id": 8,
+    "moviment_name": "Extension",
+    "joint_id": 3,
+    "joint_name": "Elbow",
+    "muscle_id": 19,
+    "muscle_name": "Long head",
+    "role": "eccentric"
+  },
+  {
+    "moviment_id": 7,
+    "moviment_name": "Flexion",
+    "joint_id": 2,
+    "joint_name": "Shoulder Glenohumeral",
+    "muscle_id": 17,
+    "muscle_name": "Short head",
+    "role": "concentric"
+  },
+  {
+    "moviment_id": 8,
+    "moviment_name": "Extension",
+    "joint_id": 2,
+    "joint_name": "Shoulder Glenohumeral",
+    "muscle_id": 17,
+    "muscle_name": "Short head",
+    "role": "eccentric"
+  },
+  {
+    "moviment_id": 7,
+    "moviment_name": "Flexion",
+    "joint_id": 2,
+    "joint_name": "Shoulder Glenohumeral",
+    "muscle_id": 21,
+    "muscle_name": "Lateral head",
+    "role": "concentric"
+  },
+  {
+    "moviment_id": 8,
+    "moviment_name": "Extension",
+    "joint_id": 2,
+    "joint_name": "Shoulder Glenohumeral",
+    "muscle_id": 21,
+    "muscle_name": "Lateral head",
+    "role": "eccentric"
+  },
+  {
+    "muscle_id": 34,
+    "muscle_name": "Rectus Abdominis",
+    "joint_id": 13,
+    "joint_name": "Spine Thoracic, Lumbar",
+    "role": "stabilizer"
+  },
+  {
+    "muscle_id": 35,
+    "muscle_name": "Erector spinae",
+    "joint_id": 13,
+    "joint_name": "Spine Thoracic, Lumbar",
+    "role": "stabilizer"
+  },
+  {
+    "muscle_id": 30,
+    "muscle_name": "Transversus Abdominis",
+    "joint_id": 13,
+    "joint_name": "Spine Thoracic, Lumbar",
+    "role": "stabilizer"
+  },
+  {
+    "muscle_id": 32,
+    "muscle_name": "Internal Obliques",
+    "joint_id": 13,
+    "joint_name": "Spine Thoracic, Lumbar",
+    "role": "stabilizer"
+  },
+  {
+    "muscle_id": 33,
+    "muscle_name": "External Obliques",
+    "joint_id": 13,
+    "joint_name": "Spine Thoracic, Lumbar",
+    "role": "stabilizer"
+  },
+  {
+    "muscle_id": 10,
+    "muscle_name": "Upper Trapezius",
+    "joint_id": 1,
+    "joint_name": "Scapula & Clavicle",
+    "role": "stabilizer"
+  },
+  {
+    "muscle_id": 11,
+    "muscle_name": "Medial Trapezius",
+    "joint_id": 1,
+    "joint_name": "Scapula & Clavicle",
+    "role": "stabilizer"
+  },
+  {
+    "muscle_id": 12,
+    "muscle_name": "Lower Trapezius",
+    "joint_id": 1,
+    "joint_name": "Scapula & Clavicle",
+    "role": "stabilizer"
+  },
+  {
+    "muscle_id": 13,
+    "muscle_name": "Minor Rhomboid",
+    "joint_id": 1,
+    "joint_name": "Scapula & Clavicle",
+    "role": "stabilizer"
+  },
+  {
+    "muscle_id": 14,
+    "muscle_name": "Major Rhomboid",
+    "joint_id": 1,
+    "joint_name": "Scapula & Clavicle",
+    "role": "stabilizer"
+  },
+  {
+    "muscle_id": 15,
+    "muscle_name": "Levator Scapulae",
+    "joint_id": 1,
+    "joint_name": "Scapula & Clavicle",
+    "role": "stabilizer"
+  }
+]

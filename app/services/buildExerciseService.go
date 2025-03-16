@@ -10,13 +10,14 @@ import (
 	"os"
 	"strings"
 )
-type RelationAMM  struct {
-    MovimentId   int    `json:"moviment_id"`
-    MovimentName string `json:"moviment_name"`
+type RelationAMM struct {
+    MovimentId   *int     `json:"moviment_id,omitempty"`
+    MovimentName *string  `json:"moviment_name,omitempty"`
     JointId      int    `json:"joint_id"`
     JointName    string `json:"joint_name"`
-    MuscleId     int    `json:"muscle_id"`
-    MuscleName   string `json:"muscle_name"`
+    MuscleId     int     `json:"muscle_id"`
+    MuscleName   string  `json:"muscle_name"`
+    Role         string  `json:"role"`
 }
 type BuildExerciseService struct {
     db *sql.DB
@@ -54,14 +55,22 @@ func (b *BuildExerciseService) Build(name string) error {
     }
     // Criar contexto da IA para processar exercicio e criar relacionamento com o banco
     prompt, err := b.prompt(exercise.Name, exercise.Description, string(jointsJson), string(musclesJson), string(movementsJson))
+    //prompt, err := utils.ReadFile("prompt.md")
     if err != nil {
         return err
     }
+    /*if err := utils.WriteFile("prompt.md", prompt); err != nil {
+        panic(err)
+    }*/
     //fmt.Println(prompt)
     stringJson, err := b.requestToAi(prompt)
+    /*stringJson, err := utils.ReadFile("response_prompt.json")
     if err != nil {
         return err
     }
+    if err := utils.WriteFile("response_prompt.json", stringJson); err != nil {
+        panic(err)
+    }*/
     var relation []RelationAMM
     if err := json.Unmarshal([]byte(stringJson), &relation); err != nil {
         fmt.Println(err)
@@ -73,10 +82,18 @@ func (b *BuildExerciseService) Build(name string) error {
 }
 func (b *BuildExerciseService) ammAlreadyRegistered(relation RelationAMM) (int64, error) {
     var id int64
-    query := "SELECT id FROM articulation_movement_muscle WHERE movement_id = ? AND articulation_id = ? AND muscle_portion_id = ?"
+    var query string
+    var args []interface{}
 
-    err := b.db.QueryRow(query, relation.MovimentId, relation.JointId, relation.MuscleId).Scan(&id)
-    if err != nil {
+    if relation.MovimentId == nil {
+        query = "SELECT id FROM articulation_movement_muscle WHERE articulation_id = ? AND muscle_portion_id = ?"
+        args = []interface{}{relation.JointId, relation.MuscleId}
+    } else {
+        query = "SELECT id FROM articulation_movement_muscle WHERE movement_id = ? AND articulation_id = ? AND muscle_portion_id = ?"
+        args = []interface{}{relation.MovimentId, relation.JointId, relation.MuscleId}
+    }
+
+    if err := b.db.QueryRow(query, args...).Scan(&id); err != nil {
         if err == sql.ErrNoRows {
             return 0, nil
         }
@@ -87,7 +104,14 @@ func (b *BuildExerciseService) ammAlreadyRegistered(relation RelationAMM) (int64
 }
 func (b *BuildExerciseService) registerRelation(relation RelationAMM) (int64, error) {
     var insertedId int64
-    result, err := b.db.Exec("INSERT INTO articulation_movement_muscle (movement_id, articulation_id, muscle_portion_id) VALUES (?, ?, ?)", relation.MovimentId, relation.JointId, relation.MuscleId)
+    var result sql.Result
+    var err error
+    if relation.MovimentId == nil {
+        result, err = b.db.Exec("INSERT INTO articulation_movement_muscle (articulation_id, muscle_portion_id) VALUES (?, ?)", relation.JointId, relation.MuscleId)
+    } else {
+        result, err = b.db.Exec("INSERT INTO articulation_movement_muscle (movement_id, articulation_id, muscle_portion_id) VALUES (?, ?, ?)", relation.MovimentId, relation.JointId, relation.MuscleId)
+    }
+    fmt.Println(result, err)
     insertedId, err = result.LastInsertId()
     return insertedId, err
 }
@@ -96,19 +120,19 @@ func (b *BuildExerciseService) registerRelationToExercise(exercise Exercise, rel
         var id int64
         id, err := b.ammAlreadyRegistered(relation)
         if err != nil {
-            fmt.Println("Pulando")
+            fmt.Println("Já registrado")
             fmt.Println(err)
             continue
         }
         if id == 0 {
             id, err = b.registerRelation(relation)
             if err != nil {
-                fmt.Println("Pulando")
+                fmt.Println("Erro ao inserir")
                 fmt.Println(err)
                 continue
             }
         }
-        _, err = b.db.Exec("INSERT INTO exercise_amm (exercise_id, amm_id) VALUES (?, ?)", exercise.Id, id)
+        _, err = b.db.Exec("INSERT INTO exercise_amm (exercise_id, amm_id, role) VALUES (?, ?, ?)", exercise.Id, id, relation.Role)
         if err != nil {
             fmt.Println(err)
         }
@@ -265,7 +289,7 @@ func (b *BuildExerciseService) requestToAi(content string) (string, error) {
         return "", err
     }
     request.Header.Set("Content-Type", "application/json")
-    request.Header.Set("Authorization", "Bearer <meu tokenzinho>")
+    request.Header.Set("Authorization", "Bearer <meu token>")
     requestClient := &http.Client{}
     response, err := requestClient.Do(request)
     if err != nil {

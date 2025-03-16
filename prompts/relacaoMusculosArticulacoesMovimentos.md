@@ -2,6 +2,9 @@
 
 You are an expert in biomechanics and kinesiology. Your task is to analyze the given exercise and return a structured JSON object listing the associated joint movements based on the provided exercise name and description.
 
+1. The associated joint movements, including their respective movement phases (concentric or eccentric).
+2. The stabilizer muscles, indicating their associated joint.
+
 ### **Input Data:**
 - **Exercise Name:** `{exercise_name}`
 - **Exercise Description:** `{exercise_description}`
@@ -23,7 +26,8 @@ Return a JSON array where each entry represents a joint movement involved in the
     "joint_id": <integer>,
     "joint_name": "<string>",
     "muscle_id": <integer>,
-    "muscle_name": "<string>"
+    "muscle_name": "<string>",
+    "role": "<concentric, eccentric or stabilizer>"
   }
 ]```
 ### Example Output:
@@ -37,10 +41,28 @@ For a Pull-Up exercise, the expected output format would be similar to:
     "joint_id": 1,
     "joint_name": "Elbow",
     "muscle_id": 1,
-    "muscle_name": "Upper major"
+    "muscle_name": "Biceps Brachii",
+    "role": "concentric"
+  },
+  {
+    "moviment_id": 2,
+    "moviment_name": "Extension",
+    "joint_id": 1,
+    "joint_name": "Elbow",
+    "muscle_id": 1,
+    "muscle_name": "Biceps Brachii",
+    "role": "eccentric"
+  },
+  {
+    "muscle_id": 5,
+    "muscle_name": "Rectus Abdominis",
+    "joint_id": 3,
+    "joint_name": "Spine",
+    "role": "stabilizer"
   },
   ...
-]```
+]
+```
 ### Important Guidelines:
 - Identify all major joint movements involved in the exercise.
 - Map each joint movement to its corresponding muscle portion.
