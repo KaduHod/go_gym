@@ -1,6 +1,6 @@
 {{ block "signin" . }}
 <div id="signin-wrapper" class="w-full h-full flex justify-center p-6">
-    <div class="transition-all duration-500 opacity-0 translate-y-5 animate-fade-in h-fit w-full max-w-md p-6 rounded-lg shadow-lg bg-gradient-to-tl from-app-200 to-app-100">
+    <div class="transition-all duration-500 opacity-0 translate-y-5 animate-fade-in h-fit w-full max-w-md p-6 rounded-lg shadow-lg bg-app-medium">
         <h2 class="text-white text-2xl font-bold mb-6 flex items-center gap-2">
             <i data-lucide="log-in" class="w-6 h-6"></i>
             Sign In
@@ -26,7 +26,7 @@
                     Email
                 </label>
                 <input id="email" name="email" type="email" placeholder="Enter your email" value="{{ .UserDTO.Email }}" required
-                    class="p-2 rounded-lg w-full">
+                    class="p-2 rounded-lg w-full text-app-dark">
             </div>
 
             <!-- Senha -->
@@ -36,13 +36,13 @@
                     Password
                 </label>
                 <input id="password" name="password" type="password" value="{{ .UserDTO.Password }}" placeholder="Enter your password" required
-                    class="p-2 rounded-lg w-full">
+                    class="p-2 rounded-lg w-full text-app-dark">
             </div>
 
             <!-- Botão -->
             <div class="flex w-full justify-center items-center">
                 <button type="submit"
-                    class="w-fit px-5 transition p-3 rounded-lg app-input items-center justify-self-center font-semibold flex justify-center gap-2">
+                    class="w-fit px-5 transition p-3 rounded-lg app-input items-center justify-self-center input-app-light font-semibold flex justify-center gap-2">
                     <i data-lucide="check-circle" class="w-5 h-5"></i>
                     Sign In
                 </button>

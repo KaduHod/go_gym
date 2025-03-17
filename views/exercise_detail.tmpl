@@ -1,25 +1,30 @@
 {{ block "exercise_detail" . }}
 <div class="p-4 w-full mx-auto rounded-lg flex flex-col gap-8">
     <!-- Seção da esquerda (informações gerais) -->
-    <div class="w-full opacity-0 -translate-x-10 transition-all duration-300 ease-out animate-fade-in-left">
-        <h2 class="text-white text-lg font-semibold">{{ .Exercise.Name }}</h2>
-        <p class="text-neutral-400 text-sm mt-1 leading-relaxed">{{ .Exercise.Description }}</p>
+    <div class="w-full opacity-0 -translate-x-10 transition-all duration-300 ease-out animate-fade-in-left flex flex-col md:flex-row items-start md:space-x-6">
+        <!-- Container para nome e descrição -->
+        <div class="flex-1">
+            <h2 class="text-white text-lg font-semibold">{{ .Exercise.Name }}</h2>
+            <p class="text-neutral-400 text-sm mt-1 leading-relaxed">{{ .Exercise.Description }}</p>
 
-        {{ if .Exercise.Link }}
-        <a href="{{ .Exercise.Link }}" class="text-red-400 text-sm mt-2 hover:underline block">
-            Wikipedia link
-        </a>
-        {{ end }}
+            {{ if .Exercise.Link }}
+            <a href="{{ .Exercise.Link }}" class="text-red-400 text-sm mt-2 hover:underline block">
+                Wikipedia link
+            </a>
+            {{ end }}
+        </div>
 
+        <!-- Imagem do exercício -->
         {{ if .ImageURL }}
-        <img src="{{ .ImageURL }}" alt="{{ .Exercise.Name }}" class="mt-3 rounded-md w-[300px] h-[200px]">
+        <img src="{{ .ImageURL }}" alt="{{ .Exercise.Name }}" class="mt-3 rounded-md w-[300px] h-[200px] object-cover">
         {{ end }}
-        <!-- Botão HTMX abaixo da imagem -->
+
+        <!-- Botão para visualizar o exercício -->
         <button
             hx-target="#main"
             hx-headers='js:{ "X-CSRF-Token": document.querySelector("[name=csrf]").value }'
             hx-post="/exercise/{{ .Exercise.Id }}"
-            class="mt-3 app-input px-4 py-2 rounded-md hover:bg-red-600 transition-all">
+            class="mt-3 input-app-light px-4 py-2 rounded-md hover:bg-red-600 transition-all">
             View Exercise
         </button>
     </div>
@@ -27,15 +32,15 @@
 
 
     <!-- Seção da direita (movimentos e músculos) -->
-    <div class="w-full opacity-0 translate-x-10 transition-all duration-300 ease-out animate-fade-in-right">
-        <h2 class="text-white text-lg font-semibold mb-6">Movements</h2>
+    <div class="w-full opacity-0 text-app-50 translate-x-10 transition-all duration-300 ease-out animate-fade-in-right">
+        <h2 class="text-app-950 text-lg font-semibold mb-6">Movements</h2>
         {{ range $role, $mmjs := .Mmjs }}
-        <div class="bg-app-gradient rounded-lg shadow-lg mb-4 overflow-hidden">
+        <div class="bg-app-gradient rounded-lg border mb-4 overflow-hidden">
             <!-- Checkbox invisível para controlar o estado -->
             <input type="checkbox" id="toggle-{{ $role }}" class="peer hidden" />
 
             <!-- Cabeçalho do Card (função) -->
-            <label for="toggle-{{ $role }}" class="p-4 bg-neutral-700 cursor-pointer flex justify-between items-center">
+            <label for="toggle-{{ $role }}" class="p-4 cursor-pointer flex justify-between items-center">
                 <h1 class="text-white text-md font-bold">{{ $role | capitalize }}</h1>
                 <svg class="w-5 h-5 text-white transform transition-transform duration-300 peer-checked:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
@@ -44,26 +49,27 @@
 
             <!-- Conteúdo Expansível (movimentos e músculos) -->
             <div class="max-h-0 overflow-hidden transition-[max-height] duration-500 ease-in-out peer-checked:max-h-[1000px]">
-                <div class="p-4 bg-neutral-800">
+                <div class="p-4">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         {{ range $mmjs }}
 
-                        <div class="relative p-3 bg-neutral-800 rounded-md shadow-sm transition-all duration-300 group hover:bg-neutral-700">
+                        <div class="relative bg-app-light p-3 rounded-md shadow-sm transition-all duration-300 group">
                             <!-- Nome da articulação -->
-                            <h3 class="text-base font-medium text-red-400 group-hover:text-red-500 transition-colors duration-300">
-                                {{ .MuscleGroupName }} {{ .MusclePortionName }}
-                            </h3>
+                            <div class="flex">
+                                <img src="/public/images/muscle.svg" class="w-4 h-4 mr-2" alt="">
+                                <h3 class="text-base font-medium text-red-400 group-hover:text-red-500 transition-colors duration-300">
+                                    {{ .MuscleGroupName }} {{ .MusclePortionName }}
+                                </h3>
+                            </div>
 
                             <!-- Linha decorativa -->
-                            <div class="h-[2px] bg-red-500 w-10 my-2 transition-all duration-300 group-hover:w-14"></div>
+                            <div class="h-[2px] w-10 my-2 transition-all duration-300 group-hover:w-14"></div>
 
-                            <div class="text-xs">
-                                <div class="flex items-center gap-1">
-                                    <span class="text-neutral-400">Movement:</span>
-                                    <span class="text-neutral-100 bg-red-500/10 px-2 py-1 rounded">
-                                        {{ .JointName }} {{ .MovimentName }}
-                                    </span>
-                                </div>
+                            <div class="flex">
+                                <img src="/public/images/joint.svg" class="w-4 h-4 mr-2" alt="">
+                                <h4 class="text-base font-medium text-red-400 group-hover:text-red-500 transition-colors duration-300">
+                                    {{ .JointName }} {{ .MovimentName }}
+                                </h4>
                             </div>
 
                             <!-- Efeito sutil de brilho -->

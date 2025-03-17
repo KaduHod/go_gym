@@ -1,13 +1,13 @@
 {{ block "search" . }}
 <div class="w-full h-full flex box-border bg-neutral-900">
-    <!-- Sidebar (Inputs) -->
     <div class="w-1/4 rounded-lg min-w-[250px] p-4 flex flex-col gap-4 opacity-0 -translate-x-10 transition-all duration-300 bg-app-gradient h-fit shadow-lg ease-out animate-fade-in-left">
         <div class="filter-item">
             <label for="search-group" class="block text-white font-medium mb-2 flex items-center gap-2">
                 <i data-lucide="layers" class="text-red-400 w-4 h-4"></i>
                 Muscle Group
             </label>
-            <input id="search-group" type="text" placeholder="Search by muscle group" class="p-2 rounded-lg w-full bg-neutral-800 text-white  focus:border-red-500 focus:outline-none">
+
+            <input id="search-group" type="text" placeholder="Search by muscle group" class="p-2 rounded-lg w-full text-app-dark">
         </div>
 
         <div class="filter-item">
@@ -15,7 +15,7 @@
                 <i data-lucide="grid" class="text-red-400 w-4 h-4"></i>
                 Muscle Portion
             </label>
-            <input id="search-portion" type="text" placeholder="Search by muscle portion" class="p-2 rounded-lg w-full bg-neutral-800 text-white  focus:border-red-500 focus:outline-none">
+            <input id="search-portion" type="text" placeholder="Search by muscle portion" class="p-2 rounded-lg w-full text-app-dark">
         </div>
 
         <div class="filter-item">
@@ -23,7 +23,7 @@
                 <i data-lucide="link" class="text-red-400 w-4 h-4"></i>
                 Joint
             </label>
-            <input id="search-joint" type="text" placeholder="Search by joint" class="p-2 rounded-lg w-full bg-neutral-800 text-white  focus:border-red-500 focus:outline-none">
+            <input id="search-joint" type="text" placeholder="Search by joint" class="p-2 rounded-lg w-full text-app-dark">
         </div>
 
         <div class="filter-item">
@@ -31,7 +31,7 @@
                 <i data-lucide="activity" class="text-red-400 w-4 h-4"></i>
                 Movement
             </label>
-            <input id="search-movement" type="text" placeholder="Search by movement" class="p-2 rounded-lg w-full bg-neutral-800 text-white  focus:border-red-500 focus:outline-none">
+            <input id="search-movement" type="text" placeholder="Search by movement" class="p-2 rounded-lg w-full text-app-dark">
         </div>
     </div>
 
@@ -53,7 +53,7 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                         {{ range $item := $mpValue.Itens }}
                         <div data-joint="{{$item.Joint_name}}" data-movement="{{$item.Movement_name}}"
-                            class="bg-neutral-800 p-4 rounded-lg muscle-card shadow-md flex flex-col gap-2 cursor-pointer transition-transform duration-300 hover:scale-105 hover:bg-red-800">
+                            class="bg-app-gradient p-4 rounded-lg muscle-card shadow-md flex flex-col gap-2 cursor-pointer transition-transform duration-300 hover:scale-105 hover:bg-red-800">
                             <h2 class="text-white muscle-name text-md font-semibold">{{ $item.Muscle_name }}</h2>
                             <p class="joint-name text-gray-400 text-sm">Joint: {{$item.Joint_name}}</p>
                             <p class="movement-name text-gray-400 text-sm">Movement: {{$item.Movement_name}}</p>

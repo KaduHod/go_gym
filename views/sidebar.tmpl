@@ -3,22 +3,22 @@
     <!-- Logo e Nome -->
     <!-- Navegação -->
     <nav class="flex h-fit flex-col space-y-2">
-        <a hx-target="#main" hx-get="/home" href="#" class="app-border-b group flex items-center gap-6 px-4 py-2 text-sm font-medium transition-colors duration-300 hover:text-red-400 relative cursor-pointer">
+        <a hx-target="#main" hx-get="/home" href="#" class=" group flex items-center gap-6 px-4 py-2 text-sm font-medium transition-colors duration-300 hover:text-red-400 relative cursor-pointer">
             <span class="absolute left-0 top-0 bottom-0 my-auto h-full w-1 bg-red-500 rounded transform scale-y-0 transition-transform origin-left group-hover:scale-y-100"></span>
             <i data-lucide="home" class="w-5 h-5"></i>
             <span>Home</span>
         </a>
-        <a href="#" hx-target="#main" hx-headers='js:{ "X-CSRF-Token": document.querySelector("[name=csrf]").value }' hx-post="/exercises" hx-indicator="#loading" class="group flex items-center gap-3 px-4 py-2 text-sm font-medium transition-colors duration-300 hover:text-red-400 relative cursor-pointer app-border-b">
+        <a href="#" hx-target="#main" hx-headers='js:{ "X-CSRF-Token": document.querySelector("[name=csrf]").value }' hx-post="/exercises" hx-indicator="#loading" class="group flex items-center gap-3 px-4 py-2 text-sm font-medium transition-colors duration-300 hover:text-red-400 relative cursor-pointer ">
             <span class="absolute left-0 top-0 bottom-0 my-auto h-full w-1 bg-red-500 rounded transform scale-y-0 transition-transform origin-left group-hover:scale-y-100"></span>
             <i data-lucide="dumbbell" class="w-5 h-5"></i>
             <span>Exercises</span>
         </a>
-        <a hx-target="#main" hx-headers='js:{ "X-CSRF-Token": document.querySelector("[name=csrf]").value }' hx-post="/muscles-joints-movements" hx-indicator="#loading" class="group flex items-center gap-3 px-4 py-2 text-sm font-medium transition-colors duration-300 hover:text-red-400 relative cursor-pointer app-border-b">
+        <a hx-target="#main" hx-headers='js:{ "X-CSRF-Token": document.querySelector("[name=csrf]").value }' hx-post="/muscles-joints-movements" hx-indicator="#loading" class="group flex items-center gap-3 px-4 py-2 text-sm font-medium transition-colors duration-300 hover:text-red-400 relative cursor-pointer ">
             <span class="absolute left-0 top-0 bottom-0 my-auto h-full w-1 bg-red-500 rounded transform scale-y-0 transition-transform origin-left group-hover:scale-y-100"></span>
             <i data-lucide="activity" class="cursor-pointer w-5 h-5"></i>
             <span class="cursor-pointer">Muscles & Movements</span>
         </a>
-        <a href="#contato" class="group flex items-center gap-3 px-4 py-2 text-sm font-medium transition-colors duration-300 hover:text-red-400 relative cursor-pointer app-border-b">
+        <a href="#contato" class="group flex items-center gap-3 px-4 py-2 text-sm font-medium transition-colors duration-300 hover:text-red-400 relative cursor-pointer ">
             <span class="absolute left-0 top-0 bottom-0 my-auto h-full w-1 bg-red-500 rounded transform scale-y-0 transition-transform origin-left group-hover:scale-y-100"></span>
             <i data-lucide="mail" class="w-5 h-5"></i>
             <span>Contact</span>
@@ -26,7 +26,7 @@
     </nav>
     <div class="flex flex-col mt-20 ">
         {{ if not .UserEmail }}
-        <div class="group flex items-center gap-3 px-4 py-2 text-sm font-medium transition-colors duration-300 hover:text-red-400 relative cursor-pointer app-border-b">
+        <div class="group flex items-center gap-3 px-4 py-2 text-sm font-medium transition-colors duration-300 hover:text-red-400 relative cursor-pointer ">
             <span class="absolute left-0 top-0 bottom-0 my-auto h-full w-1 bg-red-500 rounded transform scale-y-0 transition-transform origin-left group-hover:scale-y-100"></span>
             <i data-lucide="log-in" class="w-5 h-5"></i>
             <button hx-get="/signin" hx-target="#main" type="button">Sing In</button>
@@ -37,7 +37,7 @@
             <button hx-get="/signup" hx-target="#main" type="button">Sing Up</button>
         </div>
         {{ else }}
-        <a href="#" hx-target="#main" hx-headers='js:{ "X-CSRF-Token": document.querySelector("[name=csrf]").value }' hx-post="/exercises/create" hx-indicator="#loading" class="group flex items-center gap-3 px-4 py-2 text-sm font-medium transition-colors duration-300 hover:text-red-400 relative cursor-pointer app-border-b">
+        <a href="#" hx-target="#main" hx-headers='js:{ "X-CSRF-Token": document.querySelector("[name=csrf]").value }' hx-post="/exercises/create" hx-indicator="#loading" class="group flex items-center gap-3 px-4 py-2 text-sm font-medium transition-colors duration-300 hover:text-red-400 relative cursor-pointer ">
             <span class="absolute left-0 top-0 bottom-0 my-auto h-full w-1 bg-red-500 rounded transform scale-y-0 transition-transform origin-left group-hover:scale-y-100"></span>
             <i data-lucide="dumbbell" class="w-5 h-5"></i>
             <span>Create AiXercise</span>
@@ -45,7 +45,7 @@
         <form
             action="/signout"
             method="POST"
-            class="group flex items-center gap-3 px-4 py-2 text-sm font-medium transition-colors duration-300 hover:text-red-400 relative cursor-pointer app-border-b">
+            class="group flex items-center gap-3 px-4 py-2 text-sm font-medium transition-colors duration-300 hover:text-red-400 relative cursor-pointer ">
             <span class="absolute left-0 top-0 bottom-0 my-auto h-full w-1 bg-red-500 rounded transform scale-y-0 transition-transform origin-left group-hover:scale-y-100"></span>
             <i data-lucide="save" class="w-5 h-5"></i>
             <input type="hidden" name="csrf" value="{{ .csrf }}">

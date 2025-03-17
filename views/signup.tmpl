@@ -1,6 +1,6 @@
 {{ block "signup" . }}
 <div id="signup-wrapper" class="w-full h-full flex justify-center p-6">
-    <div class="transition-all duration-500 opacity-0 translate-y-5 animate-fade-in h-fit w-full max-w-md bg-neutral-800 p-6 rounded-lg shadow-lg bg-gradient-to-tl from-app-200 to-app-100">
+    <div class="transition-all duration-500 opacity-0 translate-y-5 animate-fade-in h-fit w-full max-w-md bg-neutral-800 p-6 rounded-lg shadow-lg bg-app-medium">
         <h2 class="text-white text-2xl font-bold mb-6 flex items-center gap-2">
             <i data-lucide="user-plus" class="text-red-400 w-6 h-6"></i>
             Create an Account
@@ -25,7 +25,7 @@
                     Full Name
                 </label>
                 <input id="name" name="name" type="text" placeholder="Enter your name" required value="{{ .UserDTO.Name }}"
-                    class="p-2 rounded-lg w-full bg-neutral-700 text-white ">
+                    class="p-2 rounded-lg w-full text-app-dark">
             </div>
 
             <!-- Email -->
@@ -35,7 +35,7 @@
                     Email
                 </label>
                 <input id="email" name="email" hx-indicator="#error-email" type="email" placeholder="Enter your email" value="{{ .UserDTO.Email }}" required
-                    class="p-2 rounded-lg w-full bg-neutral-700 text-white ">
+                    class="p-2 rounded-lg w-full text-app-dark">
             </div>
 
             <!-- Senha -->
@@ -45,7 +45,7 @@
                     Password
                 </label>
                 <input id="password" name="password" type="password" placeholder="Enter your password" value="{{ .UserDTO.Password }}"  required
-                    class="p-2 rounded-lg w-full bg-neutral-700 text-white ">
+                    class="p-2 rounded-lg w-full text-app-dark">
             </div>
 
             <!-- Confirmação de Senha -->
@@ -55,13 +55,13 @@
                     Confirm Password
                 </label>
                 <input id="confirm-password" name="confirmPassword" type="password" placeholder="Confirm your password" value="{{ .UserDTO.ConfirmPassword }}" required
-                    class="p-2 rounded-lg w-full bg-neutral-700 text-white ">
+                    class="p-2 rounded-lg w-full text-app-dark">
             </div>
 
             <!-- Botão -->
             <div class="flex w-full justify-center items-center">
                 <button type="submit"
-                    class="w-fit app-input transition p-3 rounded-lg font-semibold flex items-center justify-center gap-2">
+                    class="w-fit input-app-light transition p-3 rounded-lg font-semibold flex items-center justify-center gap-2">
                     <i data-lucide="check-circle" class="w-5 h-5"></i>
                     Sign Up
                 </button>

@@ -133,6 +133,7 @@ func main() {
         }
         if err := c.Render(200, "search", viewData); err != nil {
             log.Println("Erro ao renderizar template:", err)
+            fmt.Println(err)
             return c.JSON(500, map[string]string{"error": "Erro ao renderizar página"})
         }
         return nil
