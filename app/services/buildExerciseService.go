@@ -289,7 +289,7 @@ func (b *BuildExerciseService) requestToAi(content string) (string, error) {
         return "", err
     }
     request.Header.Set("Content-Type", "application/json")
-    request.Header.Set("Authorization", "Bearer <meu token>")
+    request.Header.Set("Authorization", "Bearer sk-69ac47cc5c994f0896613b159557c613")
     requestClient := &http.Client{}
     response, err := requestClient.Do(request)
     if err != nil {

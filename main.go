@@ -7,6 +7,7 @@ import (
 	"io"
 	"kaduhod/gym/app/controllers"
 	"kaduhod/gym/app/services"
+	"kaduhod/gym/app/utils"
 	"kaduhod/gym/database"
 	"log"
 	"net/http"
@@ -25,7 +26,9 @@ func (t *Template) Render(w io.Writer, name string, data interface{}, c echo.Con
 }
 func newTemplate() *Template {
     return &Template{
-        templates: template.Must(template.ParseGlob("./views/*.tmpl")),
+        templates: template.Must(template.New("").Funcs(template.FuncMap{
+            "capitalize": utils.CapitalizeFirstLetter,
+        }).ParseGlob("./views/*.tmpl")),
     }
 }
 type PortionMovementJoint struct {

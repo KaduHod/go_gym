@@ -1,7 +1,7 @@
 {{ block "exercise_detail" . }}
-<div class="p-4 w-full mx-auto rounded-lg flex gap-8">
+<div class="p-4 w-full mx-auto rounded-lg flex flex-col gap-8">
     <!-- Seção da esquerda (informações gerais) -->
-    <div class="w-1/2 opacity-0 -translate-x-10 transition-all duration-300 ease-out animate-fade-in-left">
+    <div class="w-full opacity-0 -translate-x-10 transition-all duration-300 ease-out animate-fade-in-left">
         <h2 class="text-white text-lg font-semibold">{{ .Exercise.Name }}</h2>
         <p class="text-neutral-400 text-sm mt-1 leading-relaxed">{{ .Exercise.Description }}</p>
 
@@ -24,22 +24,58 @@
         </button>
     </div>
 
-    <!-- Seção da direita (movimentos e músculos) -->
-    <div class="w-1/2 opacity-0 translate-x-10 transition-all duration-300 ease-out animate-fade-in-right">
 
-        <h2 class="text-white text-sm font-semibold">Muscles & Movements</h2>
-        <div class="mt-2 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4">
-            {{ range .Mmjs }}
-            <div class="p-4 bg-neutral-800 rounded-md">
-                <h3 class="text-red-400 text-xs font-semibold">{{ .JointName }}</h3>
-                <div class="text-xs flex flex-col mt-1 space-y-1">
-                    <span class="text-neutral-200"><strong>Movement:</strong> {{ .MovimentName }}</span>
-                    <span class="text-neutral-400"><strong>Muscle Portion:</strong> {{ .MusclePortionName }}</span>
-                    <span class="text-neutral-500"><strong>Muscle Group:</strong> {{ .MuscleGroupName }}</span>
+
+    <!-- Seção da direita (movimentos e músculos) -->
+    <div class="w-full opacity-0 translate-x-10 transition-all duration-300 ease-out animate-fade-in-right">
+        <h2 class="text-white text-lg font-semibold mb-6">Movements</h2>
+        {{ range $role, $mmjs := .Mmjs }}
+        <div class="bg-app-gradient rounded-lg shadow-lg mb-4 overflow-hidden">
+            <!-- Checkbox invisível para controlar o estado -->
+            <input type="checkbox" id="toggle-{{ $role }}" class="peer hidden" />
+
+            <!-- Cabeçalho do Card (função) -->
+            <label for="toggle-{{ $role }}" class="p-4 bg-neutral-700 cursor-pointer flex justify-between items-center">
+                <h1 class="text-white text-md font-bold">{{ $role | capitalize }}</h1>
+                <svg class="w-5 h-5 text-white transform transition-transform duration-300 peer-checked:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                </svg>
+            </label>
+
+            <!-- Conteúdo Expansível (movimentos e músculos) -->
+            <div class="max-h-0 overflow-hidden transition-[max-height] duration-500 ease-in-out peer-checked:max-h-[1000px]">
+                <div class="p-4 bg-neutral-800">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        {{ range $mmjs }}
+
+                        <div class="relative p-3 bg-neutral-800 rounded-md shadow-sm transition-all duration-300 group hover:bg-neutral-700">
+                            <!-- Nome da articulação -->
+                            <h3 class="text-base font-medium text-red-400 group-hover:text-red-500 transition-colors duration-300">
+                                {{ .MuscleGroupName }} {{ .MusclePortionName }}
+                            </h3>
+
+                            <!-- Linha decorativa -->
+                            <div class="h-[2px] bg-red-500 w-10 my-2 transition-all duration-300 group-hover:w-14"></div>
+
+                            <div class="text-xs">
+                                <div class="flex items-center gap-1">
+                                    <span class="text-neutral-400">Movement:</span>
+                                    <span class="text-neutral-100 bg-red-500/10 px-2 py-1 rounded">
+                                        {{ .JointName }} {{ .MovimentName }}
+                                    </span>
+                                </div>
+                            </div>
+
+                            <!-- Efeito sutil de brilho -->
+                            <div class="absolute inset-0 rounded-md bg-red-500/5 opacity-0 group-hover:opacity-10 transition-opacity duration-300"></div>
+                        </div>
+
+                        {{ end }}
+                    </div>
                 </div>
             </div>
-            {{ end }}
         </div>
+        {{ end }}
     </div>
 </div>
 {{ end }}

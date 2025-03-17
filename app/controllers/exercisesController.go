@@ -49,7 +49,7 @@ func (controller *ExercisesController) ListExercises(c echo.Context) error {
             return err
         }
     }
-    mmjs, err := controller.ListExercisesService.ListExerciseJmm(bechPess)
+    mmjs, err := controller.ListExercisesService.ListExercisesJmmByRole(bechPess)
     if err != nil {
         if err := c.Render(200, "list_exercises2", map[string]interface{}{"Exercises": exercises}); err != nil {
             fmt.Println(err.Error())
@@ -85,16 +85,15 @@ func (controller *ExercisesController) ExerciseDetail(c echo.Context) error {
     if err != nil {
         return c.String(400, err.Error())
     }
-    mmjs, err := controller.ListExercisesService.ListExerciseJmm(exercise)
+    mmjs, err := controller.ListExercisesService.ListExercisesJmmByRole(exercise)
     if err != nil {
         return c.String(400, err.Error())
     }
-    viewData := MMJViewData{
-        Mmjs: mmjs,
-        ImageURL: "public/images/exercises/"+strconv.Itoa(exercise.Id)+".jpeg",
-        Exercise: exercise,
-    }
-    if err := c.Render(200, "exercise_detail", viewData); err != nil {
+    if err := c.Render(200, "exercise_detail", map[string]interface{}{
+       "Mmjs": mmjs,
+       "ImageURL": "public/images/exercises/"+strconv.Itoa(exercise.Id)+".jpeg",
+       "Exercise": exercise,
+    }); err != nil {
         fmt.Println(err.Error())
         return err
     }
@@ -113,16 +112,15 @@ func (controller *ExercisesController) EditExerciseForm(c echo.Context) error {
     if err != nil {
         return c.String(400, err.Error())
     }
-    mmjs, err := controller.ListExercisesService.ListExerciseJmm(exercise)
+    mmjs, err := controller.ListExercisesService.ListExercisesJmmByRole(exercise)
     if err != nil {
         return c.String(400, err.Error())
     }
-    viewData := MMJViewData{
-        Mmjs: mmjs,
-        ImageURL: "public/images/exercises/"+strconv.Itoa(exercise.Id)+".jpeg",
-        Exercise: exercise,
-    }
-    if err := c.Render(200, "edit_exercise", viewData); err != nil {
+    if err := c.Render(200, "edit_exercise", map[string]interface{}{
+        "Mmjs": mmjs,
+        "ImageURL": "public/images/exercises/"+strconv.Itoa(exercise.Id)+".jpeg",
+        "Exercise": exercise,
+    }); err != nil {
         fmt.Println(err.Error())
         return err
     }

@@ -33,6 +33,13 @@
                 event.detail.target = event.detail.xhr.status == 200 ? document.body : document.getElementById("signin-wrapper");
             }
         })
+
+        function toggleExpand(role) {
+            const content = document.getElementById(`content-${role}`);
+            const icon = document.getElementById(`icon-${role}`);
+            content.classList.toggle('hidden');
+            icon.classList.toggle('rotate-180');
+        }
     </script>
 </html>
 {{end}}

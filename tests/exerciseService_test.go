@@ -2,6 +2,7 @@ package tests
 
 import (
 	"database/sql"
+	"fmt"
 	"kaduhod/gym/app/services"
 	"kaduhod/gym/database"
 	"os"
@@ -52,4 +53,11 @@ func TestMMJFromExercise(t *testing.T) {
         return
     }
 }
-
+func TestMMJByRoleFromExercise(t *testing.T) {
+    data, err := service.ListExercisesJmmByRole(services.Exercise{Id: 87})
+    if err != nil {
+        t.Errorf("Error listing exercises by role: %v", err)
+        return
+    }
+    fmt.Println(data)
+}
