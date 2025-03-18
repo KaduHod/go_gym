@@ -36,16 +36,7 @@
     <div class="w-full opacity-0 text-app-50 translate-y-5 transition-all duration-300 ease-out animate-fade-in">
         <h2 class="text-app-950 text-lg font-semibold mb-6">Movements</h2>
         {{ range $role, $mmjs := .Mmjs }}
-        {{if eq $role "concentric"}}
-        <div class="app-gradient-tl rounded-lg mb-1 overflow-hidden">
-        {{end}}
-        {{if eq $role "eccentric"}}
-        <div class="app-gradient-l rounded-lg mb-1 overflow-hidden">
-        {{end}}
-        {{if eq $role "stabilizer"}}
-
-        <div class="app-gradient-bl rounded-lg mb-1 overflow-hidden">
-        {{end}}
+        <div class="bg-app-gradient rounded-lg mb-1 overflow-hidden">
             <!-- Checkbox invisível para controlar o estado -->
             <input type="checkbox" id="toggle-{{ $role }}" class="peer hidden" />
 

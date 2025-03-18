@@ -1023,6 +1023,10 @@ video {
   background-image: linear-gradient(to top left, var(--tw-gradient-stops));
 }
 
+.bg-\[url\(\'\/public\/images\/bg-circles-orange\.svg\'\)\] {
+  background-image: url('/public/images/bg-circles-orange.svg');
+}
+
 .from-app-white {
   --tw-gradient-from: #ffffff var(--tw-gradient-from-position);
   --tw-gradient-to: rgb(255 255 255 / 0) var(--tw-gradient-to-position);
