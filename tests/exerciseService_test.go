@@ -11,6 +11,7 @@ import (
 
 var service *services.ListExercisesService
 var db *sql.DB
+var exerciseStatsService *services.ExerciseStatsService
 
 // TestMain configura o ambiente antes de rodar os testes
 func TestMain(m *testing.M) {

@@ -111,3 +111,8 @@ WHERE eamm.exercise_id  = ?`, exercise.Id)
     }
     return mmjs, nil
 }
+func (s *ListExercisesService) GetByName(name string) (Exercise, error) {
+    var exercise Exercise
+    err := s.db.QueryRow("SELECT id, name, description, info_link FROM exercise WHERE name = ?", name).Scan(&exercise.Id, &exercise.Name, &exercise.Description, &exercise.Link)
+    return exercise, err
+}

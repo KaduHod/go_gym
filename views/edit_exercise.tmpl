@@ -2,7 +2,7 @@
 <div class="w-full h-full p-6 mx-auto rounded-lg flex gap-6">
     <!-- Lista de Exercícios -->
     <form class="flex-1 w-1/4 p-4 rounded-lg
-        min-h-[600px] bg-app-gradient shadow-lg max-h-[800px] overflow-y-auto opacity-0 -translate-x-10 transition-all duration-300 ease-out animate-fade-in-left">
+        min-h-[600px] bg-app-gradient shadow-lg max-h-[800px] overflow-y-auto opacity-0 -translate-y-5 transition-all duration-300 ease-out animate-fade-in">
         <h2 class="text-white text-lg font-semibold">Edit Exercise</h2>
 
         <label class="text-neutral-400 text-sm" for="name">Name</label>
@@ -59,7 +59,7 @@
     </form>
     <!-- Área de Exibição -->
     <div id="exercise-details" class="flex w-3/4 rounded-lg
-        min-h-[600px] max-h-[800px] overflow-y-auto opacity-0 translate-x-10 transition-all duration-300 ease-out animate-fade-in-right">
+        min-h-[600px] max-h-[800px] overflow-y-auto opacity-0 translate-y-5 transition-all duration-300 ease-out animate-fade-in">
         {{ template "exercise_detail" . }}
     </div>
 </div>

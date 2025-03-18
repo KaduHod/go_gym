@@ -1,0 +1,115 @@
+{{ block "exercise_stats" . }}
+<div class="p-4 w-full mx-auto rounded-lg flex flex-col gap-8">
+    <!-- Seção de Estatísticas -->
+    <div class="w-full opacity-0 -translate-y-5 transition-all duration-300 ease-out animate-fade-in flex flex-col items-start">
+        <h2 class="text-white text-lg font-semibold">Statistics</h2>
+
+        <div class="grid grid-cols-4 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-4">
+            <div class="bg-app-light p-4 rounded-md shadow-md">
+                <h3 class="text-red-400 text-md font-medium">{{ .JointsCount }} Joints</h3>
+            </div>
+            <div class="bg-app-light p-4 rounded-md shadow-md">
+                <h3 class="text-red-400 text-md font-medium">{{ .MovementsCount }} Movements</h3>
+            </div>
+            <div class="bg-app-light p-4 rounded-md shadow-md">
+                <h3 class="text-red-400 text-md font-medium">{{ .MusclesCount }} Muscles</h3>
+            </div>
+            <div class="bg-app-light p-4 rounded-md shadow-md">
+                <h3 class="text-red-400 text-md font-medium">{{ .MusclePortionsCount }} Muscle Portions</h3>
+            </div>
+        </div>
+    </div>
+
+    <!-- Listas Detalhadas -->
+    <div class="w-full opacity-0 text-app-950 translate-y-5 transition-all duration-300 ease-out animate-fade-in">
+        <div class="grid grid-cols-1 md:grid-cols-1">
+            {{ if .Joints }}
+            <div class="app-gradient-tl rounded-lg shadow-lg mb-1 overflow-hidden">
+                <input type="checkbox" id="toggle-joints" class="peer hidden" />
+
+                <label for="toggle-joints" class="p-4 cursor-pointer flex justify-between items-center">
+                    <h3 class="text-white text-md font-bold">Joints</h3>
+                    <svg class="w-5 h-5 text-white transform transition-transform duration-300 peer-checked:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                    </svg>
+                </label>
+
+                <div class="max-h-0 overflow-hidden transition-[max-height] duration-500 ease-in-out peer-checked:max-h-[500px]">
+                    <div class="p-4">
+                        <ul class="text-sm text-neutral-400">
+                            {{ range .Joints }}
+                            <li class="mt-1 flex">
+                                <img src="/public/images/joint.svg" class="w-4 h-4 mr-2" alt="">
+                                <h3>{{ . }}</h3>
+                            </li>
+                            {{ end }}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            {{ end }}
+
+            <!-- Movements -->
+            {{ if .Movements }}
+            <div class="app-gradient-l shadow-lg rounded-lg mb-1 overflow-hidden">
+                <input type="checkbox" id="toggle-movements" class="peer hidden" />
+
+                <label for="toggle-movements" class="p-4 cursor-pointer flex justify-between items-center">
+                    <h3 class="text-white text-md font-bold">Movements</h3>
+                    <svg class="w-5 h-5 text-white transform transition-transform duration-300 peer-checked:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                    </svg>
+                </label>
+
+                <div class="max-h-0 overflow-hidden transition-[max-height] duration-500 ease-in-out peer-checked:max-h-[500px]">
+                    <div class="p-4">
+                        <ul class="text-sm text-neutral-400">
+                            {{ range .Movements }}
+                            <li class="mt-1 flex">
+                                <img src="/public/images/joint.svg" class="w-4 h-4 mr-2" alt="">
+                                <h3>{{ . }}</h3>
+                            </li>
+                            {{ end }}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            {{ end }}
+
+
+            {{ if .MusclesGroups }}
+            <div class="app-gradient-bl rounded-lg shadow-lg mb-1 overflow-hidden">
+                <input type="checkbox" id="toggle-muscles" class="peer hidden" />
+
+                <label for="toggle-muscles" class="p-4 cursor-pointer flex justify-between items-center">
+                    <h3 class="text-lg font-bold">Muscle Groups</h3>
+                    <svg class="w-5 h-5 text-white transform transition-transform duration-300 peer-checked:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                    </svg>
+                </label>
+
+                <div class="max-h-0 overflow-hidden transition-[max-height] duration-500 ease-in-out peer-checked:max-h-[500px]">
+                    <div class="p-4">
+                        {{ range $muscle, $portions := .MusclesGroups }}
+                        <div class="mb-4 w-full">
+                            <h3 class="text-white text-md font-bold">{{ $muscle }}</h3>
+                            <ul class="text-sm text-neutral-400">
+                                {{ range $portions }}
+                                <li class="mt-1 flex">
+                                    <img src="/public/images/muscle.svg" class="w-4 h-4 mr-2" alt="">
+                                    <h3 class="text-base font-medium text-red-400 group-hover:text-red-500 transition-colors duration-300">
+                                        {{ . }}
+                                    </h3>
+                                </li>
+                                {{ end }}
+                            </ul>
+                        </div>
+                        {{ end }}
+                    </div>
+                </div>
+            </div>
+            {{ end }}
+        </div>
+    </div>
+</div>
+{{ end }}

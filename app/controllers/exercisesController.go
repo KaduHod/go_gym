@@ -56,11 +56,20 @@ func (controller *ExercisesController) ListExercises(c echo.Context) error {
             return err
         }
     }
+    var mmjsForStats []services.MMJ
+    for _, items := range mmjs {
+        for _, item := range items {
+            mmjsForStats = append(mmjsForStats, item)
+        }
+    }
+    statsService := services.NewExerciseStatsService(bechPess)
+    stats := statsService.GetStats(mmjsForStats)
     if err := c.Render(200, "list_exercises2", map[string]interface{}{
         "Exercises": exercises,
         "Mmjs": mmjs,
         "ImageURL": "public/images/exercises/"+strconv.Itoa(bechPess.Id)+".jpeg",
         "Exercise": bechPess,
+        "Stats": stats,
     }); err != nil {
         fmt.Println(err.Error())
         return err
@@ -89,10 +98,19 @@ func (controller *ExercisesController) ExerciseDetail(c echo.Context) error {
     if err != nil {
         return c.String(400, err.Error())
     }
-    if err := c.Render(200, "exercise_detail", map[string]interface{}{
+    var mmjsForStats []services.MMJ
+    for _, items := range mmjs {
+        for _, item := range items {
+            mmjsForStats = append(mmjsForStats, item)
+        }
+    }
+    statsService := services.NewExerciseStatsService(exercise)
+    fmt.Println(statsService.GetStats(mmjsForStats))
+    if err := c.Render(200, "exercise_page", map[string]interface{}{
        "Mmjs": mmjs,
        "ImageURL": "public/images/exercises/"+strconv.Itoa(exercise.Id)+".jpeg",
        "Exercise": exercise,
+       "Stats": statsService.GetStats(mmjsForStats),
     }); err != nil {
         fmt.Println(err.Error())
         return err

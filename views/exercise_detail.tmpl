@@ -1,7 +1,7 @@
 {{ block "exercise_detail" . }}
 <div class="p-4 w-full mx-auto rounded-lg flex flex-col gap-8">
     <!-- Seção da esquerda (informações gerais) -->
-    <div class="w-full opacity-0 -translate-x-10 transition-all duration-300 ease-out animate-fade-in-left flex flex-col md:flex-row items-start md:space-x-6">
+    <div class="w-full opacity-0 -translate-y-5 transition-all duration-300 ease-out animate-fade-in flex flex-col md:flex-row items-start md:space-x-6">
         <!-- Container para nome e descrição -->
         <div class="flex-1">
             <h2 class="text-white text-lg font-semibold">{{ .Exercise.Name }}</h2>
@@ -13,35 +13,45 @@
             </a>
             {{ end }}
         </div>
+        <div class="flex flex-col">
+            <!-- Imagem do exercício -->
+            {{ if .ImageURL }}
+            <img src="{{ .ImageURL }}" alt="{{ .Exercise.Name }}" class="mt-3 rounded-md w-[300px] h-[200px] object-cover">
+            {{ end }}
 
-        <!-- Imagem do exercício -->
-        {{ if .ImageURL }}
-        <img src="{{ .ImageURL }}" alt="{{ .Exercise.Name }}" class="mt-3 rounded-md w-[300px] h-[200px] object-cover">
-        {{ end }}
-
-        <!-- Botão para visualizar o exercício -->
-        <button
-            hx-target="#main"
-            hx-headers='js:{ "X-CSRF-Token": document.querySelector("[name=csrf]").value }'
-            hx-post="/exercise/{{ .Exercise.Id }}"
-            class="mt-3 input-app-light px-4 py-2 rounded-md hover:bg-red-600 transition-all">
-            View Exercise
-        </button>
+            <!-- Botão para visualizar o exercício -->
+            <button
+                hx-target="#main"
+                hx-headers='js:{ "X-CSRF-Token": document.querySelector("[name=csrf]").value }'
+                hx-post="/exercise/{{ .Exercise.Id }}"
+                class="mt-3 input-app-light px-4 py-2 rounded-md hover:bg-red-600 transition-all">
+                View Exercise
+            </button>
+        </div>
     </div>
 
 
 
     <!-- Seção da direita (movimentos e músculos) -->
-    <div class="w-full opacity-0 text-app-50 translate-x-10 transition-all duration-300 ease-out animate-fade-in-right">
+    <div class="w-full opacity-0 text-app-50 translate-y-5 transition-all duration-300 ease-out animate-fade-in">
         <h2 class="text-app-950 text-lg font-semibold mb-6">Movements</h2>
         {{ range $role, $mmjs := .Mmjs }}
-        <div class="bg-app-gradient rounded-lg border mb-4 overflow-hidden">
+        {{if eq $role "concentric"}}
+        <div class="app-gradient-tl rounded-lg mb-1 overflow-hidden">
+        {{end}}
+        {{if eq $role "eccentric"}}
+        <div class="app-gradient-l rounded-lg mb-1 overflow-hidden">
+        {{end}}
+        {{if eq $role "stabilizer"}}
+
+        <div class="app-gradient-bl rounded-lg mb-1 overflow-hidden">
+        {{end}}
             <!-- Checkbox invisível para controlar o estado -->
             <input type="checkbox" id="toggle-{{ $role }}" class="peer hidden" />
 
             <!-- Cabeçalho do Card (função) -->
             <label for="toggle-{{ $role }}" class="p-4 cursor-pointer flex justify-between items-center">
-                <h1 class="text-white text-md font-bold">{{ $role | capitalize }}</h1>
+                <h1 class="text-white text-lg font-bold">{{ $role | capitalize }}</h1>
                 <svg class="w-5 h-5 text-white transform transition-transform duration-300 peer-checked:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
                 </svg>
@@ -52,7 +62,6 @@
                 <div class="p-4">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         {{ range $mmjs }}
-
                         <div class="relative bg-app-light p-3 rounded-md shadow-sm transition-all duration-300 group">
                             <!-- Nome da articulação -->
                             <div class="flex">
